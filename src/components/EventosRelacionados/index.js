@@ -1,6 +1,7 @@
 import EventoRelacionadoCard from 'components/EventoRelacionadoCard';
 
 import styles from '../EventoRelacionadoCard/EventoRelacionadoCard.module.css';
+import CampoTitulo from 'components/CampoTitulo';
 
 const EventosRelacionados = () => {
   const eventos = [
@@ -20,12 +21,13 @@ const EventosRelacionados = () => {
 
   return (
     <div>
-      <h2>Eventos relacionados</h2>
+      <CampoTitulo titulo="Eventos relacionados"/>
+
       <div className={styles.eventosRelacionados}>
         {eventos.map((evento, index) => (
           <EventoRelacionadoCard key={index} evento={evento} />
         ))}
-      </div>
+      </div>      
     </div>
   );
 };

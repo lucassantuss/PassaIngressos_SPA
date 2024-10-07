@@ -3,11 +3,9 @@ import SegurancaVendas from "components/SegurancaVendas";
 import Feedback from "components/Feedback";
 
 import styles from "./Inicio.module.css"
-import EventosDisponiveis from "components/EventosDisponiveis";
 import CampoTitulo from "components/CampoTitulo";
 import CampoSubtitulo from "components/CampoSubtitulo";
 import BarraPesquisa from "components/BarraPesquisa";
-import Botao from "components/Botao";
 
 export default function Inicio() {
     return (
