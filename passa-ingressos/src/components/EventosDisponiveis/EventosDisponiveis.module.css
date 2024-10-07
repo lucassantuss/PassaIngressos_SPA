@@ -1,0 +1,34 @@
+.eventosContainer {
+    position: relative;
+    width: 100%;
+    height: 65vh;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url('/public/images/banners/show-2.jpg');    
+    background-size: contain;
+    background-position: center;
+  }
+  
+  .title {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 30px;
+  }

@@ -1,0 +1,54 @@
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.menuItens {
+  display: flex;
+  justify-content: center; /* Centraliza os itens horizontalmente */
+  align-items: center; /* Centraliza os itens verticalmente */
+  gap: 40px; /* Espaçamento entre os itens */
+}
+
+.menuLink {
+  text-decoration: none;
+  font-size: 16px;
+  color: black;
+  transition: color 0.3s;
+}
+
+.menuLink:hover {
+  color: gray;
+}
+
+.menuLogin {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  align-self: center; /* Centraliza o botão de login */
+}
+
+.menuLogin:hover {
+  background-color: gray;
+}
