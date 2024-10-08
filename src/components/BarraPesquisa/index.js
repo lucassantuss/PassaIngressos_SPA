@@ -1,17 +1,17 @@
-import Botao from 'components/Botao';
-import styles from './BarraPesquisa.module.css';
+import Botao from "components/Botao";
 
-const BarraPesquisa = ( {placeholder }) => {
+import styles from "./BarraPesquisa.module.css";
 
+const BarraPesquisa = ({ placeholder }) => {
   return (
     <div className={styles.searchBox}>
-        <input
-            type="text"
-            placeholder={placeholder}
-            className={styles.searchInput}
-        />
-        
-        <Botao cn={styles.searchButton} conteudo="Pesquisar"/>
+      <input
+        type="text"
+        placeholder={placeholder}
+        className={styles.searchInput}
+      />
+
+      <Botao cn={styles.searchButton} conteudo="Pesquisar" />
     </div>
   );
 };

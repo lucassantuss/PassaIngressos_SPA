@@ -10,10 +10,8 @@ const PermissionComponent = ({ role, children }) => {
     async function loadRoles() {
       const response = await api.get("/Acesso/Perfis");
       console.log(response.data);
-      
-      const findRole = response.data.some((r) =>
-        role?.split(",").includes(r)
-      );
+
+      const findRole = response.data.some((r) => role?.split(",").includes(r));
 
       console.log(findRole);
 

@@ -2,53 +2,48 @@
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    font-family: Arial, sans-serif;
   }
   
-  .textContainer {
+  .textAboutContainer {
     flex: 1;
     margin-right: 20px;
   }
   
-  h1 {
+  .textAboutContainer h1 {
     color: #333;
   }
   
-  p {
+  .textAboutContainer p {
     color: #666;
   }
   
-  ul {
+  .textAboutContainer ul {
     list-style-type: none;
     padding: 0;
   }
   
-  ul li {
+  .textAboutContainer ul li {
     color: #333;
     margin-bottom: 10px;
   }
   
-  .imageContainer {
+  .imageAboutContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
-  .imageRow {
+  .imageAboutRow {
     display: flex;
     justify-content: center;
     margin: 5px;
   }
 
-  .imageRow img {
+  .imageAboutRow img {
     margin: 10px;
     border-radius: 16px;
   }
   
-  .teamImage {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 10px;
-  }  
+  .imageAboutRow img:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }

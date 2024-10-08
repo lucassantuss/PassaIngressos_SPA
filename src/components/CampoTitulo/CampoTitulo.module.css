@@ -1,5 +1,6 @@
 .titulo {
-    margin-bottom: 10px;
-    font-size: 2.5rem;
-    align-items: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
 }

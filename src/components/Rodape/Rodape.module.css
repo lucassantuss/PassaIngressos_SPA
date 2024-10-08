@@ -1,66 +1,66 @@
 .footer {
-    background-color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    color: #aaa;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  
-  .brandName {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: left;
-    margin: 5px;
+  background-color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  color: #aaa;
+}
 
-    color: #aaa;
-    text-decoration: none;
-  }
-  
-  .links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: left;
-  }
-  
-  .link {
-    color: #aaa;
-    text-decoration: none;
-    font-size: 1em;    
-    margin: 5px;
-  }
-  
-  .icons {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-start;
-    margin: 5px;
-  }
-  
-  .icon {
-    font-size: 1.2em;
-    color: #aaa;
-  }
-  
-  .left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  
-  .right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }  
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footerCompanyName {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: left;
+  margin: 5px;
+
+  color: #aaa;
+  text-decoration: none;
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.footerLink {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 1em;
+  margin: 5px;
+}
+
+.footerIcons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  margin: 5px;
+}
+
+.footerIcon {
+  font-size: 1.2em;
+  color: #aaa;
+}
+
+.footerLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.footerRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
