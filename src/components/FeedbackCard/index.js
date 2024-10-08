@@ -1,15 +1,15 @@
-import styles from './FeedbackCard.module.css';
+import styles from "./FeedbackCard.module.css";
 
 function FeedbackCard({ feedback, name, age, imgSrc }) {
   return (
-    <div className={styles.feedbackCard}>
+    <div className={styles.cardFeedbackContainer}>
       <p>{feedback}</p>
-      <div className={styles.userDetails}>
-        <img src={imgSrc} alt={name} className={styles.userImage} />
+      <div className={styles.userDetailsCardFeedback}>
+        <img src={imgSrc} alt={name} className={styles.userImageCardFeedback} />
         <div>
-          <span className={styles.userName}>{name}</span>
-          <br/>
-          <span className={styles.userAge}>{age} anos</span>
+          <span className={styles.userNameCardFeedback}>{name}</span>
+          <br />
+          <span className={styles.userAgeCardFeedback}>{age} anos</span>
         </div>
       </div>
     </div>

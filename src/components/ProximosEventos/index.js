@@ -1,12 +1,14 @@
-import ProximoEventoCard from 'components/ProximoEventoCard';
-import styles from './ProximosEventos.module.css';
+import CampoTitulo from "components/CampoTitulo";
+import ProximoEventoCard from "components/ProximoEventoCard";
+
+import styles from "./ProximosEventos.module.css";
 
 function ProximosEventos() {
   return (
-    <div className={styles.events}>
-      <h2>Próximos eventos</h2>
+    <div className={styles.proximosEventosContainer}>
+      <CampoTitulo titulo="Próximos eventos" />
 
-      <div className={styles.eventList}>
+      <div className={styles.proximosEventosList}>
         <ProximoEventoCard
           imageUrl="/images/events/The-Weeknd-2024.jpg"
           title="The Weeknd"

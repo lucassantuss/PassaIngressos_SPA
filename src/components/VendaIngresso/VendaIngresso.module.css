@@ -1,0 +1,85 @@
+.vendaIngressoContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.formVendaIngressoContainer {
+  flex: 1;
+  margin-right: 40px;
+}
+
+.formVendaIngressoContainer h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.formVendaIngresso {
+  display: flex;
+  flex-direction: column;
+}
+
+.formVendaIngressoGroup {
+  margin-bottom: 15px;
+}
+
+.formVendaIngressoGroup label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.formVendaIngressoGroup input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.botaoAnunciarIngresso {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.botaoAnunciarIngresso:hover {
+  background-color: #333;
+}
+
+.imagemVendaIngressoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.eventImageVendaIngresso {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .vendaIngressoContainer {
+    flex-direction: column;
+  }
+
+  .formVendaIngressoContainer {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .imagemVendaIngressoContainer {
+    justify-content: center;
+  }
+}

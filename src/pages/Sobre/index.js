@@ -1,12 +1,13 @@
 import FormContato from "components/FormContato";
-import styles from "./Sobre.module.css"
 import CampoTitulo from "components/CampoTitulo";
+
+import styles from "./Sobre.module.css"
 
 export default function Sobre() {
     return (
         <div className={styles.aboutContainer}>
             <div className="row">
-                <div className={styles.textContainer}>
+                <div className={styles.textAboutContainer}>
                     <CampoTitulo titulo="Sobre"/>
 
                     <p>A Passa Ingressos é uma startup brasileira, com o intuito de facilitar a revenda e compra de ingressos para eventos por meio de uma plataforma que possa conectar as pessoas.</p>
@@ -23,12 +24,12 @@ export default function Sobre() {
                 </div>                
             </div>
 
-            <div className={styles.imageContainer}>
-                <div className={styles.imageRow}>
+            <div className={styles.imageAboutContainer}>
+                <div className={styles.imageAboutRow}>
                     <img src='/images/groupMembers/danilo.jpg' alt="Danilo Rodrigues Dantas" width="250px" height="250px" />
                     <img src='/images/groupMembers/renan.jpg' alt="Renan Cesar de Araujo" width="250px" height="250px" />
                 </div>
-                <div className={styles.imageRow}>
+                <div className={styles.imageAboutRow}>
                     <img src='/images/groupMembers/lucas.jpg' alt="Lucas Araujo dos Santos" width="250px" height="250px" />
                 </div>
             </div>         

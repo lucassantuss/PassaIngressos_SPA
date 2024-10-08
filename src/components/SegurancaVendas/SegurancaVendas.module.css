@@ -1,4 +1,4 @@
-.container {
+.segurancaVendasContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6,22 +6,22 @@
   background-color: #f8f8f8;
 }
 
-.textContainer {
+.textoSegurancaVendasContainer {
   flex: 1;
   padding-right: 18px;
   margin-right: 20px;
 }
 
-.securityContent p {
+.itensConteudoSegurancaVendas p {
   font-size: 16px;
   color: #333;
 }
 
-.securityContent p strong {
+.itensConteudoSegurancaVendas p strong {
   font-weight: bold;
 }
 
-.sellButton {
+.botaoVenderIngressoSegurancaVendas {
   margin-top: 10px;
   padding: 10px 10px;
   background-color: #000;
@@ -32,15 +32,15 @@
   width: 200px;
 }
 
-.sellButton:hover {  
+.botaoVenderIngressoSegurancaVendas:hover {
   background-color: #333;
 }
 
-.imageContainer {
+.imagemSegurancaVendasContainer {
   flex: 1;
 }
 
-.securityImage {
+.imagemSegurancaVendas {
   width: 100%;
   max-width: 700px;
   height: auto;

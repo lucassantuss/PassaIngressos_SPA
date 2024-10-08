@@ -1,42 +1,31 @@
-import EventoCard from 'components/EventoCard';
-import styles from './EventosDisponiveis.module.css';
-import BarraPesquisa from 'components/BarraPesquisa';
+import EventoDisponivelCard from "components/EventoDisponivelCard";
 
-const EventosDisponiveis = ( { title, subtitle, urlImage }) => {
+import styles from "./EventosDisponiveis.module.css";
+
+const EventosDisponiveis = () => {
   const eventos = [
     {
-      title: 'The Weeknd',
+      title: "The Weeknd",
       ingressos: 3,
       ano: 2024,
-      image: '/images/events/The-Weeknd-2024.jpg',
-      reverse: false,
+      image: "/images/events/The-Weeknd-2024.jpg",
+      reverse: true,
     },
     {
-      title: 'Bruno Mars',
+      title: "Bruno Mars",
       ingressos: 7,
       ano: 2024,
-      image: '/images/events/Bruno-Mars-2024.png',
-      reverse: true,
+      image: "/images/events/Bruno-Mars-2024.png",
+      reverse: false,
     },
   ];
 
   return (
-    <>
-      <div className={styles.eventosContainer}>
-        <div className={styles.overlay}>
-          <h1 className={styles.title}>{title}</h1>
-          <p className={styles.subtitle}>{subtitle}</p>
-          
-          <BarraPesquisa placeholder="Digite o nome do evento.."/>
-        </div>
-      </div>
-
-      <div>
-        {eventos.map((evento, index) => (
-          <EventoCard key={index} evento={evento} />
-        ))}
-      </div>
-    </>
+    <div>
+      {eventos.map((evento, index) => (
+        <EventoDisponivelCard key={index} evento={evento} />
+      ))}
+    </div>
   );
 };
 
