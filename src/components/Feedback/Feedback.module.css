@@ -6,7 +6,8 @@
 
 .feedbackList {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: 20px;
-  gap: 20px;
+  gap: 20px; 
 }

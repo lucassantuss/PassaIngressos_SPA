@@ -31,7 +31,10 @@
   margin-bottom: 5px;
 }
 
-.formVendaIngressoGroup input {
+.formVendaIngressoGroup input,
+.formVendaIngressoGroup select {
+  margin-top: 10px;
+  margin-bottom: 5px;
   width: 100%;
   padding: 10px;
   font-size: 14px;
@@ -72,6 +75,7 @@
 @media (max-width: 768px) {
   .vendaIngressoContainer {
     flex-direction: column;
+    padding: 20px;
   }
 
   .formVendaIngressoContainer {

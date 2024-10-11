@@ -7,20 +7,32 @@
 
 .footerContainer {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
+.footerLeft, .footerRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footerCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
 .footerCompanyName {
   font-size: 1.5em;
   font-weight: bold;
-  margin-bottom: 10px;
-  text-align: left;
   margin: 5px;
-
   color: #aaa;
   text-decoration: none;
 }
@@ -29,7 +41,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  text-align: left;
 }
 
 .footerLink {
@@ -42,7 +53,6 @@
 .footerIcons {
   display: flex;
   gap: 10px;
-  justify-content: flex-start;
   margin: 5px;
 }
 
@@ -51,16 +61,14 @@
   color: #aaa;
 }
 
-.footerLeft {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+.footerLogo {
+  max-width: 125px;
+  height: auto;
 }
 
-.footerRight {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+@media (min-width: 768px) {
+  .footerContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }

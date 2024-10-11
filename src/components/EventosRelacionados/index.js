@@ -1,10 +1,18 @@
+import { useEffect, useState } from "react";
+import axios from "axios"; // TODO Remover depois
+
 import CampoTitulo from "components/CampoTitulo";
 import EventoRelacionadoCard from "components/EventoRelacionadoCard";
 
 import styles from "./EventosRelacionados.module.css";
 
+// TODO Remover depois
+const api = axios.create({
+  baseURL: "http://localhost:5026/",
+});
+
 const EventosRelacionados = () => {
-  const eventos = [
+  const eventosRelacionados = [
     {
       title: "Travis Scott",
       ingressos: 9,
@@ -19,12 +27,27 @@ const EventosRelacionados = () => {
     },
   ];
 
+  // const [eventosRelacionados, setEventosRelacionados] = useState([]);
+
+  useEffect(() => {
+    const pesquisarEventosRelacionados = async () => {
+      try {
+        // const response = await api.get("/ListarEventosRelacionados");
+        // setEventosRelacionados(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar os eventos relacionados:", error);
+      }
+    };
+
+    pesquisarEventosRelacionados();
+  }, []);
+
   return (
     <div>
       <CampoTitulo titulo="Eventos relacionados" />
 
       <div className={styles.eventosRelacionadosContainer}>
-        {eventos.map((evento, index) => (
+        {eventosRelacionados.map((evento, index) => (
           <EventoRelacionadoCard key={index} evento={evento} />
         ))}
       </div>
