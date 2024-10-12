@@ -6,7 +6,6 @@ import api from "services/api";
 import styles from "./VendaIngresso.module.css";
 
 export default function VendaIngresso() {
-
   const [ingresso, setIngresso] = useState({
     nome: "",
     imagem: null,
@@ -38,28 +37,126 @@ export default function VendaIngresso() {
     const { name, value, files } = e.target;
 
     if (name === "imagem") {
-      setIngresso({ ...ingresso, [name]: files[0] });
-      setVisualizacaoImagem(URL.createObjectURL(files[0])); // Cria uma URL para a imagem
+      const file = files[0];
+      setIngresso({ ...ingresso, imagem: file });
+      setVisualizacaoImagem(URL.createObjectURL(file));
     } else {
       setIngresso({ ...ingresso, [name]: value });
     }
   };
 
+  const obterExtensaoArquivo = (fileName) => {
+    return fileName.split(".").pop();
+  };
+
+  const converterParaBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const validarFormulario = () => {
+    const { nome, imagem, local, data, horario, tipoIngresso, valor } = ingresso;
+
+    if (!nome.trim()) {
+      alert("O nome do evento é obrigatório.");
+      return false;
+    }
+    if (!imagem) {
+      alert("É necessário selecionar uma imagem para o evento.");
+      return false;
+    }
+    if (!local.trim()) {
+      alert("O local do evento é obrigatório.");
+      return false;
+    }
+    if (!data || !/^\d{2}\/\d{2}\/\d{4}$/.test(data)) {
+      alert("A data do evento é inválida ou não foi preenchida.");
+      return false;
+    }
+    if (!horario || !/^\d{2}:\d{2}:\d{2}$/.test(horario)) {
+      alert("O horário do evento é inválido ou não foi preenchido.");
+      return false;
+    }
+    if (!tipoIngresso) {
+      alert("É necessário selecionar um tipo de ingresso.");
+      return false;
+    }
+    if (!valor || isNaN(parseFloat(valor))) {
+      alert("O valor do ingresso é obrigatório.");
+      return false;
+    }
+
+    return true;
+  };
+
   const onSubmitIngresso = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    for (const key in ingresso) {
-      formData.append(key, ingresso[key]);
+    if (!validarFormulario()) {
+      return;
     }
 
     try {
-      // await api.post("/CriarIngresso", formData, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // });
+      // Converte a imagem para base64 e extrai as informações necessárias
+      let imagemBase64 = "";
+      let contentType = "";
+      let extensaoImagem = "";
+
+      if (ingresso.imagem) {
+        imagemBase64 = await converterParaBase64(ingresso.imagem);
+        contentType = ingresso.imagem.type;
+        extensaoImagem = obterExtensaoArquivo(ingresso.imagem.name);
+      }
+
+      // Primeiro, salva o arquivo e obtem o IdArquivo
+      const arquivoDto = {
+        ConteudoArquivo: imagemBase64.split(",")[1], // Remove o prefixo base64
+        ContentType: contentType,
+        Extensao: extensaoImagem,
+        Nome: ingresso.imagem.name
+      };
+
+      const arquivoResponse = await api.post("/Arquivo/SalvarArquivo", arquivoDto);
+      const idArquivoEvento = arquivoResponse.data; // Obtem o Id do arquivo salvo
+
+      // Converte a data e hora (yyyy-MM-ddTHH:mm:ss)
+      const dataHoraEvento = `${ingresso.data.split("/").reverse().join("-")}T${ingresso.horario}`;
+
+      // Monta o objeto conforme o DTO esperado
+      const ingressoDto = {
+        NomeEvento: ingresso.nome,
+        LocalEvento: ingresso.local,
+        DataHoraEvento: dataHoraEvento,
+        IdTipoIngresso: parseInt(ingresso.tipoIngresso),
+        IdPessoaAnunciante: 3, // TODO Obter o ID da Pessoa do UsuarioLogado
+        Valor: parseFloat(ingresso.valor),
+        IdArquivoEvento: idArquivoEvento
+      };
+
+      // Anuncia o Ingresso
+      await api.post("/Eventos/AnunciarIngresso", ingressoDto, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
       alert("Ingresso anunciado com sucesso!");
+
+      // Limpa todos os campos
+      setIngresso({
+        nome: "",
+        imagem: null,
+        local: "",
+        data: "",
+        horario: "",
+        tipoIngresso: "",
+        valor: "",
+      });
+      setVisualizacaoImagem(null);
     } catch (error) {
       console.error("Erro ao anunciar ingresso:", error);
     }
@@ -84,7 +181,7 @@ export default function VendaIngresso() {
             <label>Imagem do Evento:</label>
             <input
               type="file"
-              name="imagemEvento"
+              name="imagem"
               accept="image/*"
               onChange={onChangeIngresso}
             />
