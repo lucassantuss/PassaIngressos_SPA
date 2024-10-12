@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./SegurancaVendas.module.css";
 
 function SegurancaVendas() {
@@ -17,7 +18,9 @@ function SegurancaVendas() {
           <p>Encontre pessoas que estão revendendo os ingressos.</p>
           <br />
         </div>
-        <button className={styles.botaoVenderIngressoSegurancaVendas}>Vender Ingresso</button>
+        <Link to="/vender-ingresso">
+          <button className={styles.botaoVenderIngressoSegurancaVendas}>Vender Ingresso</button>
+        </Link>
       </div>
       <div className={styles.imagemSegurancaVendasContainer}>
         <img

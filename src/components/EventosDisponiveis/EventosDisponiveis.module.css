@@ -1,0 +1,14 @@
+.eventosDisponiveisContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  @media (min-width: 768px) {
+    .eventosDisponiveisContainer {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }

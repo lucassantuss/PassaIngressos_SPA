@@ -4,12 +4,14 @@
   align-items: center;
   padding: 50px;
   background-color: #f8f8f8;
+  flex-wrap: wrap;
 }
 
 .textoSegurancaVendasContainer {
   flex: 1;
   padding-right: 18px;
   margin-right: 20px;
+  min-width: 300px;
 }
 
 .itensConteudoSegurancaVendas p {
@@ -48,4 +50,22 @@
   object-fit: cover;
   margin-left: 15px;
   margin-right: 15px;
+}
+
+@media (max-width: 768px) {
+  .segurancaVendasContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .textoSegurancaVendasContainer {
+    margin-right: 0;
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .imagemSegurancaVendas {
+    margin: 0;
+  }
 }

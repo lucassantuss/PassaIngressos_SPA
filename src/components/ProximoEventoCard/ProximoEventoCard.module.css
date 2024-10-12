@@ -1,5 +1,6 @@
 .proximoEventoCard {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 10px;
@@ -20,12 +21,7 @@
   width: 100%;
   height: 200px;
   border-radius: 8px;
-
-  width: 350px;
-  height: 350px;
   object-fit: cover;
-  border-radius: 15px;
-
   margin-top: 12px;
 }
 

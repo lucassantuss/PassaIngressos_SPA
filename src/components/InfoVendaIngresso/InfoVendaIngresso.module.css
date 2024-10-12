@@ -13,6 +13,7 @@
 
 @media (max-width: 768px) {
   .cardGridInfoVendaIngresso {
-    grid-template-columns: 1fr; /* Em telas menores, vai mostrar 1 card por linha */
+    grid-template-columns: 1fr; /* Em telas menores, mostra 1 card por linha */
+    grid-gap: 20px;
   }
 }
