@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios"; // TODO Remover depois
 import CampoTitulo from "components/CampoTitulo";
 import ProximoEventoCard from "components/ProximoEventoCard";
+import api from "services/api";
 
 import styles from "./ProximosEventos.module.css";
-
-// TODO Remover depois
-const api = axios.create({
-  baseURL: "http://localhost:5026/",
-});
 
 function ProximosEventos() {
   const [proximosEventos, setProximosEventos] = useState([]);
@@ -16,10 +11,25 @@ function ProximosEventos() {
   useEffect(() => {
     const listarProximosEventos = async () => {
       try {
-        // const response = await api.get("/ListarProximosEventos");
-        // setProximosEventos(response.data);
+        // Lista os próximos eventos
+        const response = await api.get("/Eventos/ListarProximosEventos");
+        const proximosEventosData = response.data;
+
+        // Chama o método para buscar as imagens
+        const proximosEventosComImagens = await Promise.all(
+          proximosEventosData.map(
+            async (proxEvento) => {
+              if (proxEvento.idArquivoEvento) {
+                proxEvento.imagemEvento = `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${proxEvento.idArquivoEvento}`;
+              } else {
+                proxEvento.imagemEvento = '/images/Event.jpg'; // Imagem padrão se não houver
+              }
+              return proxEvento;
+            }));
+
+        setProximosEventos(proximosEventosComImagens);
       } catch (error) {
-        console.error("Erro ao listar próximos eventos:", error);
+        console.error("Erro ao listar os próximos eventos:", error);
       }
     };
 
@@ -34,29 +44,11 @@ function ProximosEventos() {
         {proximosEventos.map((evento, index) => (
           <ProximoEventoCard
             key={index}
-            imageUrl={evento.imageUrl}
-            title={evento.title}
-            year={evento.year}
+            title={evento.nomeEvento}
+            year={evento.ano}
+            imageUrl={evento.imagemEvento}
           />
         ))}
-
-        <ProximoEventoCard
-          imageUrl="/images/events/The-Weeknd-2024.jpg"
-          title="The Weeknd"
-          year="2024"
-        />
-
-        <ProximoEventoCard
-          imageUrl="/images/events/Travis-Scott-2024.png"
-          title="Travis Scott"
-          year="2024"
-        />
-
-        <ProximoEventoCard
-          imageUrl="/images/events/Bruno-Mars-2024.png"
-          title="Bruno Mars"
-          year="2024"
-        />
       </div>
     </div>
   );

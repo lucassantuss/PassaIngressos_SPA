@@ -2,39 +2,39 @@ import { useState, useEffect } from "react";
 import Banner from "components/Banner";
 import EventosDisponiveis from "components/EventosDisponiveis";
 import EventosRelacionados from "components/EventosRelacionados";
-
-import axios from "axios"; // TODO Remover depois
+import api from "services/api";
 
 import styles from "./Eventos.module.css";
 
-// TODO Remover depois
-const api = axios.create({
-  baseURL: "http://localhost:5026/",
-});
-
 export default function Eventos() {
-  const [eventos, setEventos] = useState([]);
   const [eventosFiltrados, setEventosFiltrados] = useState([]);
 
-  useEffect(() => {
-    const fetchEventos = async () => {
-      try {
-        // const response = await api.get("/ListarEventosDisponiveis");
-        // setEventos(response.data);
-        // setEventosFiltrados(response.data); // Inicialmente, todos os eventos são filtrados
-      } catch (error) {
-        console.error("Erro ao buscar os eventos:", error);
+  const onChangeSearch = async (searchTerm) => {
+    try {
+      if (searchTerm) {
+        const response = await api.get(`/Eventos/PesquisarEventosPorNome/${searchTerm}`);
+        const eventosDisponiveisData = response.data;
+
+        // Chama o método para buscar as imagens
+        const eventosDisponiveisComImagens = await Promise.all(
+          eventosDisponiveisData.map(
+            async (eventoDisp) => {
+              if (eventoDisp.idArquivoEvento) {
+                eventoDisp.imagemEvento = `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${eventoDisp.idArquivoEvento}`;
+              } else {
+                eventoDisp.imagemEvento = '/images/Event.jpg'; // Imagem padrão se não houver
+              }
+              return eventoDisp;
+            }));
+
+        setEventosFiltrados(eventosDisponiveisComImagens);
+      } else {
+        setEventosFiltrados([]);
       }
-    };
-
-    fetchEventos();
-  }, []);
-
-  const onChangeSearch = (searchTerm) => {
-    const filteredEvents = eventos.filter((evento) =>
-      evento.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setEventosFiltrados(filteredEvents);
+    } catch (error) {
+      console.error("Erro ao buscar os eventos por nome:", error);
+      setEventosFiltrados([]);
+    }
   };
 
   return (

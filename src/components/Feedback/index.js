@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios"; // TODO Remover depois
 import CampoTitulo from "components/CampoTitulo";
 import FeedbackCard from "components/FeedbackCard";
+import api from "services/api";
 
 import styles from "./Feedback.module.css";
-
-// TODO Remover depois
-const api = axios.create({
-  baseURL: "http://localhost:5026/",
-});
 
 function Feedback() {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -16,10 +11,25 @@ function Feedback() {
   useEffect(() => {
     const listarFeedbacks = async () => {
       try {
-        // const response = await api.get("/Listarfeedbacks");
-        // setFeedbacks(response.data);
+        // Lista os feedbacks
+        const response = await api.get("/Feedback/ListarFeedbacks");
+        const feedbacksData = response.data;
+
+        // Chama o método para buscar as imagens
+        const feedbacksComImagens = await Promise.all(
+          feedbacksData.map(
+            async (feedback) => {
+              if (feedback.idArquivoFoto) {
+                feedback.imagemPessoa = `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${feedback.idArquivoFoto}`;
+              } else {
+                feedback.imagemPessoa = '/images/User.png'; // Imagem padrão se não houver
+              }
+              return feedback;
+            }));
+
+        setFeedbacks(feedbacksComImagens);
       } catch (error) {
-        console.error("Erro ao listar feedbacks:", error);
+        console.error("Erro ao listar os feedbacks:", error);
       }
     };
 
@@ -31,34 +41,15 @@ function Feedback() {
       <CampoTitulo titulo="Feedback dos Usuários" />
 
       <div className={styles.feedbackList}>
-        {feedbacks.map((feedback, index) => (
+        {feedbacks.map((feedback) => (
           <FeedbackCard
-            key={index}
-            feedback={feedback.text}
-            name={feedback.name}
-            age={feedback.age}
-            imgSrc={feedback.imgSrc}
+            key={feedback.idFeedback}
+            feedback={feedback.descricaoFeedback}
+            name={feedback.nomePessoa}
+            age={feedback.idadePessoa}
+            imgSrc={feedback.imagemPessoa}
           />
         ))}
-
-        <FeedbackCard
-          feedback="Muito bom, consegui vender meu ingresso!"
-          name="Danilo"
-          age={27}
-          imgSrc="/images/groupMembers/danilo.jpg"
-        />
-        <FeedbackCard
-          feedback="Top!! Comprei o ingresso pro show do The Weeknd e deu tudo certo!"
-          name="Renan"
-          age={22}
-          imgSrc="/images/groupMembers/renan.jpg"
-        />
-        <FeedbackCard
-          feedback="Fácil e seguro, nem precisei conversar com ninguém para vender meu ingresso"
-          name="Lucas"
-          age={22}
-          imgSrc="/images/groupMembers/lucas.jpg"
-        />
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import styles from "./EventoDisponivelCard.module.css";
 
 const EventoDisponivelCard = ({ evento }) => {
-  const { title, ingressos, ano, image, reverse } = evento;
-
+  const { nomeEvento, quantidadeIngressosDisponiveis, ano, imagemEvento, reverse } = evento;
+  
   return (
     <div
       className={`${styles.cardDisponivelContainer} ${
@@ -10,13 +10,13 @@ const EventoDisponivelCard = ({ evento }) => {
       }`}
     >
       <img
-        src={image}
-        alt={title}
+        src={imagemEvento}
+        alt={nomeEvento}
         className={styles.eventImageCardDisponivel}
       />
       <div className={styles.eventInfoCardDisponivel}>
-        <h2>{title}</h2>
-        <p>{ingressos} Ingressos disponíveis</p>
+        <h2>{nomeEvento}</h2>
+        <p>{quantidadeIngressosDisponiveis} Ingressos disponíveis</p>
         <p>{ano}</p>
         <button className={styles.viewButtonCardDisponivel}>Visualizar</button>
       </div>

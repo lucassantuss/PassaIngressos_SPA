@@ -1,11 +1,7 @@
 import { useState } from "react";
-import axios from "axios"; // TODO Remover depois
-import styles from "./FormContato.module.css";
+import api from "services/api";
 
-// TODO Remover depois
-const api = axios.create({
-  baseURL: "http://localhost:5026/",
-});
+import styles from "./FormContato.module.css";
 
 export default function FormContato() {
   const [dadosContato, setDadosContato] = useState({
@@ -27,10 +23,9 @@ export default function FormContato() {
     e.preventDefault();
 
     try {
-      // await api.post("/api/EnviarEmailContato", dadosContato);
+      await api.post("/api/EnviarEmailContato", dadosContato);
       alert("Mensagem enviada com sucesso!");
       setDadosContato({ nome: "", email: "", mensagem: "" }); // Limpa o formulário após envio
-      console.log(dadosContato)
     } catch (error) {
       console.error("Erro ao enviar mensagem:", error);
       alert("Erro ao enviar mensagem. Tente novamente.");

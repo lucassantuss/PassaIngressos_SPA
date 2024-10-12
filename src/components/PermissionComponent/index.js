@@ -9,11 +9,7 @@ const PermissionComponent = ({ role, children }) => {
   useEffect(() => {
     async function loadRoles() {
       const response = await api.get("/Acesso/Perfis");
-      console.log(response.data);
-
       const findRole = response.data.some((r) => role?.split(",").includes(r));
-
-      console.log(findRole);
 
       setPermissions(findRole);
     }

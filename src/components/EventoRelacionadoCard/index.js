@@ -1,18 +1,18 @@
 import styles from "./EventoRelacionadoCard.module.css";
 
 const EventoRelacionadoCard = ({ evento }) => {
-  const { title, ingressos, ano, image, size } = evento;
+  const { nomeEvento, quantidadeIngressosDisponiveis, ano, imagemEvento } = evento;
 
   return (
     <div className={styles.cardRelacionadoContainer}>
       <img
-        src={image}
-        alt={title}
-        className={`${styles.eventImageCardRelacionado} ${styles[size]}`}
+        src={imagemEvento}
+        alt={nomeEvento}
+        className={styles.eventImageCardRelacionado}
       />
       <div className={styles.eventInfoCardRelacionado}>
-        <h2>{title}</h2>
-        <p>{ingressos} Ingressos disponíveis</p>
+        <h2>{nomeEvento}</h2>
+        <p>{quantidadeIngressosDisponiveis} Ingressos disponíveis</p>
         <p>{ano}</p>
       </div>
     </div>

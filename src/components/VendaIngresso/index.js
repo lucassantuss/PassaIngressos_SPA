@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
-import InputMask from "react-input-mask";
 import { NumericFormat } from "react-number-format";
-
-import axios from "axios"; // TODO Remover depois
-// import api from "../services/api";
+import InputMask from "react-input-mask";
+import api from "services/api";
 
 import styles from "./VendaIngresso.module.css";
 
-// TODO Remover depois
-const api = axios.create({
-  baseURL: "http://localhost:5026/",
-});
-
 export default function VendaIngresso() {
+
   const [ingresso, setIngresso] = useState({
     nome: "",
     imagem: null,
@@ -30,8 +24,8 @@ export default function VendaIngresso() {
     // Função para listar os tipos de ingressos
     const listarTiposIngressos = async () => {
       try {
-        // const response = await api.get("/TabelaGeral/ListarTiposIngressos");
-        // setTiposIngressos(response.data);
+        const response = await api.get("TabelaGeral/PesquisarItensPorTabela/TG_TIPO_INGRESSO");
+        setTiposIngressos(response.data);
       } catch (error) {
         console.error("Erro ao listar os tipos de ingressos:", error);
       }
@@ -65,7 +59,6 @@ export default function VendaIngresso() {
       //     "Content-Type": "multipart/form-data",
       //   },
       // });
-      console.log(ingresso)
       alert("Ingresso anunciado com sucesso!");
     } catch (error) {
       console.error("Erro ao anunciar ingresso:", error);
@@ -136,10 +129,10 @@ export default function VendaIngresso() {
               <option value="">Selecione um tipo de ingresso</option>
               {tiposIngressos.map((tipo) => (
                 <option
-                  key={tipo.IdItemTabelaGeral}
-                  value={tipo.IdItemTabelaGeral}
+                  key={tipo.idItemTabelaGeral}
+                  value={tipo.idItemTabelaGeral}
                 >
-                  {tipo.Descricao}
+                  {tipo.descricao}
                 </option>
               ))}
             </select>
