@@ -1,0 +1,18 @@
+.infoComoFuncionaContainer {
+    padding: 0.1px;
+    background-color: #fff;
+  }
+  
+  .cardGridComoFunciona {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .cardGridComoFunciona {
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+    }
+  }

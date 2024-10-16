@@ -1,49 +1,104 @@
 .aboutContainer {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.textAndFormContainer {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.textAboutContainer p {
+  font-size: 1rem;
+}
+
+.imageAboutContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageAboutRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.imageAboutRow img {
+  width: 150px;
+  height: 150px;
+  margin: 10px 0;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.imageAboutRow img:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.formContatoContainer {
+  margin-top: 40px;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .aboutContainer {
+    flex-direction: row;
     justify-content: space-between;
-    padding: 20px;
+    padding: 40px;
   }
-  
-  .textAboutContainer {
-    flex: 1;
-    margin-right: 20px;
+
+  .textAndFormContainer {
+    margin-right: 40px;
   }
-  
-  .textAboutContainer h1 {
-    color: #333;
-  }
-  
-  .textAboutContainer p {
-    color: #666;
-  }
-  
-  .textAboutContainer ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .textAboutContainer ul li {
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
+
   .imageAboutContainer {
-    display: flex;
     flex-direction: column;
-    align-items: center;
+    flex: 0.5;
   }
-  
+
   .imageAboutRow {
-    display: flex;
+    flex-direction: row;
     justify-content: center;
-    margin: 5px;
   }
 
   .imageAboutRow img {
-    margin: 10px;
+    width: 180px;
+    height: 180px;
+    margin: 0 15px;
+    object-fit: cover;
     border-radius: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
-  
+
   .imageAboutRow img:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   }
+}
+
+@media (min-width: 1024px) {
+  .aboutContainer {
+    padding: 40px 20px;
+  }
+
+  .textAboutContainer p {
+    font-size: 1.2rem;
+  }
+
+  .imageAboutRow img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .imageAboutRow img:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  }
+}

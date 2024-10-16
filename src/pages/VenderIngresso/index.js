@@ -1,4 +1,4 @@
-import InfoVendaIngresso from "components/InfoVendaIngresso";
+import InfoPassoAPasso from "components/InfoPassoAPasso";
 import VendaIngresso from "components/VendaIngresso";
 
 import styles from "./VenderIngresso.module.css";
@@ -6,7 +6,7 @@ import styles from "./VenderIngresso.module.css";
 export default function VenderIngresso() {
     return (
         <div>
-            <InfoVendaIngresso />
+            <InfoPassoAPasso tipo="Venda" />
             <VendaIngresso />
         </div>
     )
