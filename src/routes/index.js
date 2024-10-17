@@ -11,10 +11,13 @@ import Evento from "pages/Evento";
 import ComoFunciona from "../pages/ComoFunciona"
 import Sobre from '../pages/Sobre';
 import Login from "../pages/Login"
+import EsqueciMinhaSenha from "../pages/EsqueciMinhaSenha";
 import NaoEncontrada from "../pages/NaoEncontrada"
 
 import PrivateRoutes from "./PrivateRoutes";
 import { AuthProvider } from "context/AuthContext";
+import CriarConta from "pages/CriarConta";
+import MinhaConta from "pages/MinhaConta";
 
 function AppRoutes() {
   return (
@@ -30,7 +33,11 @@ function AppRoutes() {
             <Route path="evento/:id" element={<Evento />} />
             <Route path="como-funciona" element={<ComoFunciona />} />
             <Route path="sobre" element={<Sobre />} />
+
             <Route path="login" element={<Login />} />
+            <Route path="esqueci-senha" element={<EsqueciMinhaSenha />} />
+            <Route path="criar-conta" element={<CriarConta />} />
+            <Route path="minha-conta" element={<MinhaConta />} />
           </Route>
 
           <Route element={<PrivateRoutes role="ADMIN, USER" />}>

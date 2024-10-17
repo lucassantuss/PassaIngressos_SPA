@@ -8,14 +8,14 @@ function SegurancaVendas() {
         <h2>Segurança nas vendas!</h2>
         <div className={styles.itensConteudoSegurancaVendas}>
           <br />
-          <p><strong>Dinheiro + rápido</strong></p>
-          <p>Revenda o seu ingresso que não irá usar e receba na hora.</p>
+          <p><strong>+ chances de ir ao evento</strong></p>
+          <p>Encontre pessoas que estão revendendo os ingressos.</p>
           <br />
           <p><strong>100% seguro</strong></p>
           <p>Sem chance de fraude! Com transações feitas diretamente no site.</p>
           <br />
-          <p><strong>+ chances de ir ao evento</strong></p>
-          <p>Encontre pessoas que estão revendendo os ingressos.</p>
+          <p><strong>Pagamento após o evento</strong></p>
+          <p>O pagamento do ingresso ao vendedor será realizado somente após o evento para evitar golpes!</p>
           <br />
         </div>
         <Link to="/vender-ingresso">
@@ -26,6 +26,7 @@ function SegurancaVendas() {
         <img
           src="/images/banners/seguranca-vendas.jpg"
           alt="Segurança nas Vendas"
+          title="Segurança nas Vendas"
           className={styles.imagemSegurancaVendas}
         />
       </div>

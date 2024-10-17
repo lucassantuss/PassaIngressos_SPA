@@ -1,6 +1,5 @@
+import CampoTitulo from "components/CampoTitulo";
+
 export default function NaoEncontrada() {
-    return (
-    <h1>
-        Not Found! Error 404
-    </h1>)
+  return <CampoTitulo titulo="Not Found! Error 404" />;
 }

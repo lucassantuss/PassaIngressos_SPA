@@ -4,6 +4,7 @@ import ProximoEventoCard from "components/ProximoEventoCard";
 import api from "services/api";
 
 import styles from "./ProximosEventos.module.css";
+import { Link } from "react-router-dom";
 
 function ProximosEventos() {
   const [proximosEventos, setProximosEventos] = useState([]);
@@ -17,15 +18,15 @@ function ProximosEventos() {
 
         // Chama o método para buscar as imagens
         const proximosEventosComImagens = await Promise.all(
-          proximosEventosData.map(
-            async (proxEvento) => {
-              if (proxEvento.idArquivoEvento) {
-                proxEvento.imagemEvento = `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${proxEvento.idArquivoEvento}`;
-              } else {
-                proxEvento.imagemEvento = '/images/Event.jpg'; // Imagem padrão se não houver
-              }
-              return proxEvento;
-            }));
+          proximosEventosData.map(async (proxEvento) => {
+            if (proxEvento.idArquivoEvento) {
+              proxEvento.imagemEvento = `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${proxEvento.idArquivoEvento}`;
+            } else {
+              proxEvento.imagemEvento = "/images/Event.jpg"; // Imagem padrão se não houver
+            }
+            return proxEvento;
+          })
+        );
 
         setProximosEventos(proximosEventosComImagens);
       } catch (error) {
@@ -42,12 +43,14 @@ function ProximosEventos() {
 
       <div className={styles.proximosEventosList}>
         {proximosEventos.map((evento, index) => (
-          <ProximoEventoCard
-            key={index}
-            title={evento.nomeEvento}
-            year={evento.ano}
-            imageUrl={evento.imagemEvento}
-          />
+          <Link key={evento.id} to={`/evento/${evento.id}`}>
+            <ProximoEventoCard
+              key={index}
+              title={evento.nomeEvento}
+              year={evento.ano}
+              imageUrl={evento.imagemEvento}
+            />
+          </Link>
         ))}
       </div>
     </div>

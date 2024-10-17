@@ -12,6 +12,7 @@ const EventoDisponivelCard = ({ evento }) => {
       <img
         src={imagemEvento}
         alt={nomeEvento}
+        title={nomeEvento}
         className={styles.eventImageCardDisponivel}
       />
       <div className={styles.eventInfoCardDisponivel}>

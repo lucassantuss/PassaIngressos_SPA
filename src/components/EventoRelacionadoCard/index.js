@@ -8,6 +8,7 @@ const EventoRelacionadoCard = ({ evento }) => {
       <img
         src={imagemEvento}
         alt={nomeEvento}
+        title={nomeEvento}
         className={styles.eventImageCardRelacionado}
       />
       <div className={styles.eventInfoCardRelacionado}>

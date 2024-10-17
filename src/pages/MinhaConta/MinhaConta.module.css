@@ -1,0 +1,89 @@
+.minhaContaContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.formMinhaContaContainer {
+  flex: 1;
+  margin-right: 40px;
+}
+
+.formMinhaContaContainer h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.formMinhaConta {
+  display: flex;
+  flex-direction: column;
+}
+
+.formMinhaContaGroup {
+  margin-bottom: 15px;
+}
+
+.formMinhaContaGroup label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.formMinhaContaGroup input,
+.formMinhaContaGroup select {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.botaoAtualizarConta {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.botaoAtualizarConta:hover {
+  background-color: #333;
+}
+
+.imagemMinhaContaContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.eventImageMinhaConta {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .minhaContaContainer {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .formMinhaContaContainer {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .imagemMinhaContaContainer {
+    justify-content: center;
+  }
+}

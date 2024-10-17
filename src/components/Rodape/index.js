@@ -22,6 +22,7 @@ export default function Rodape() {
             <img
               src="/logoPassaIngressos.png"
               alt="Logo"
+              title="Logo"
               className={styles.footerLogo}
             />
           </Link>

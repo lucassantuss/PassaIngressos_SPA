@@ -5,7 +5,7 @@ export default function InfoCard({ icon, title, text }) {
     <div className={styles.infoCard}>
       {icon && (
         <div className={styles.iconInfoCard}>
-          <img src={`/images/icons/${icon}.svg`} alt={title} />
+          <img src={`/images/icons/${icon}.svg`} alt={title} title={title} />
         </div>
       )}
       

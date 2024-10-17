@@ -37,10 +37,10 @@
 
 @media (max-width: 768px) {
   .titleBanner {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .subtitleBanner {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }

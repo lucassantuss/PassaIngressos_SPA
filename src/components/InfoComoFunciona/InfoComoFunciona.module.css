@@ -1,13 +1,12 @@
 .infoComoFuncionaContainer {
-    padding: 0.1px;
     background-color: #fff;
+    padding: 20px;
   }
   
   .cardGridComoFunciona {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     justify-items: center;
-    margin-top: 20px;
   }
   
   @media (max-width: 768px) {

@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Botao from "components/Botao";
 
 import styles from "./Evento.module.css";
+import InfoPassoAPasso from "components/InfoPassoAPasso";
+import CampoTitulo from "components/CampoTitulo";
 
 const eventos = {
   1: {
@@ -19,34 +21,36 @@ const eventos = {
 };
 
 export default function Evento() {
-    const { id } = useParams(); // Pega o ID da URL
-    const [eventoAtual, setEventoAtual] = useState(null);
-  
-    // Simulação de fetch de dados do evento
-    useEffect(() => {
-      const evento = eventos[id];
-      if (evento) {
-        setEventoAtual(evento);
-      }
-    }, [id]);
-  
-    if (!eventoAtual) {
-      return <h1>Carregando evento...</h1>;
+  const { id } = useParams(); // Pega o ID da URL
+  const [eventoAtual, setEventoAtual] = useState(null);
+
+  // Simulação de fetch de dados do evento
+  useEffect(() => {
+    const evento = eventos[id];
+    if (evento) {
+      setEventoAtual(evento);
     }
-  
-    return (
+  }, [id]);
+
+  if (!eventoAtual) {
+    return <CampoTitulo titulo="Evento não encontrado..." />;
+  }
+
+  return (
+    <>
       <div className={styles.eventoContainer}>
         <div className={styles.imagemEventoContainer}>
           <img
             src={eventoAtual.imageUrl}
             alt={eventoAtual.title}
+            title={eventoAtual.title}
             className={styles.imagemEvento}
           />
         </div>
-  
+
         <div className={styles.infoEventoContainer}>
           <h1 className={styles.tituloEvento}>{eventoAtual.title}</h1>
-  
+
           <div className={styles.detalhesEvento}>
             <div className={styles.linhaEvento}>
               <label>Local:</label>
@@ -58,7 +62,7 @@ export default function Evento() {
                 ))}
               </select>
             </div>
-  
+
             <div className={styles.linhaEvento}>
               <label>Data:</label>
               <select className={styles.campoSelect}>
@@ -69,7 +73,7 @@ export default function Evento() {
                 ))}
               </select>
             </div>
-  
+
             <div className={styles.linhaEvento}>
               <label>Tipo Ingresso:</label>
               <select className={styles.campoSelect}>
@@ -80,7 +84,7 @@ export default function Evento() {
                 ))}
               </select>
             </div>
-  
+
             <div className={styles.linhaEvento}>
               <label>Valor:</label>
               <select className={styles.campoSelect}>
@@ -91,10 +95,15 @@ export default function Evento() {
                 ))}
               </select>
             </div>
-  
-            <Botao cn={styles.botaoAdicionar} conteudo="Adicionar no carrinho" />
+
+            <Botao
+              cn={styles.botaoAdicionar}
+              conteudo="Adicionar ao Carrinho"
+            />
           </div>
         </div>
       </div>
+      <InfoPassoAPasso tipo="Compra" />
+    </>
   );
 }

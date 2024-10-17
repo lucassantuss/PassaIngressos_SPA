@@ -2,7 +2,7 @@ import BarraPesquisa from "components/BarraPesquisa";
 
 import styles from "./Banner.module.css";
 
-const Banner = ({ title, subtitle, placeholder, urlImage, onSearch }) => {
+const Banner = ({ title, subtitle, placeholder, searchTerm, onSearch, urlImage }) => {
   return (
     <div
       className={styles.bannerContainer}
@@ -12,7 +12,7 @@ const Banner = ({ title, subtitle, placeholder, urlImage, onSearch }) => {
         <h1 className={styles.titleBanner}>{title}</h1>
         <p className={styles.subtitleBanner}>{subtitle}</p>
 
-        <BarraPesquisa placeholder={placeholder} onSearch={onSearch} />
+        <BarraPesquisa placeholder={placeholder} onSearch={onSearch} searchTerm={searchTerm} />
       </div>
     </div>
   );
