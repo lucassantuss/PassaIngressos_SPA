@@ -1,5 +1,11 @@
 .subtitulo {
   margin-bottom: 10px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .subtitulo {
+    font-size: 0.8rem;
+  }
 }

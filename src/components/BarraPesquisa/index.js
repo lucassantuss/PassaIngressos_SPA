@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Botao from "components/Botao";
 
 import styles from "./BarraPesquisa.module.css";
 
-const BarraPesquisa = ({ placeholder, onSearch }) => {
+const BarraPesquisa = ({ placeholder, onSearch, searchTerm }) => {
   const [eventoPesquisado, setEventoPesquisado] = useState("");
+
+  // Atualiza o valor inicial no input de pesquisa quando o searchTerm mudar
+  useEffect(() => {
+    if (searchTerm) {
+      setEventoPesquisado(searchTerm);
+    }
+  }, [searchTerm]);
 
   const onChangeSearch = () => {
     onSearch(eventoPesquisado);

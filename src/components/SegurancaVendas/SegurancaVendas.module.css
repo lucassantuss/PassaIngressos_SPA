@@ -65,6 +65,11 @@
     text-align: center;
   }
 
+  .imagemSegurancaVendasContainer {
+    flex: 1;
+    padding: 35px;
+  }
+
   .imagemSegurancaVendas {
     margin: 0;
   }

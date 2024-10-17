@@ -2,31 +2,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 30px;
   background-color: white;
-}
-
-.menu ul {
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .menuLogo {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
 }
 
+.menuToggle {
+  display: none;
+}
+
 .menuItens {
+  list-style: none;
   display: flex;
-  justify-content: center; /* Centraliza os itens horizontalmente */
-  align-items: center; /* Centraliza os itens verticalmente */
-  gap: 40px; /* Espaçamento entre os itens */
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.menuItens li {
+  margin: 0 20px;
 }
 
 .menuLink {
@@ -46,9 +45,45 @@
   padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
-  align-self: center; /* Centraliza o botão de login */
 }
 
 .menuLogin:hover {
   background-color: gray;
+}
+
+@media (max-width: 768px) {
+  .menuItens {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1000;
+    padding: 10px;
+  }
+
+  .menuToggle {
+    display: block;
+  }
+
+  .menuItens.active {
+    display: flex;
+  }
+
+  .menuItens li {
+    margin: 10px 0;
+  }
+
+  .menuLogin {
+    padding: 5px 10px;
+  }
+
+  .toggleButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
 }

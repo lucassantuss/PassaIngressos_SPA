@@ -1,0 +1,89 @@
+.criacaoContaContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.formCriacaoContaContainer {
+  flex: 1;
+  margin-right: 40px;
+}
+
+.formCriacaoContaContainer h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.formCriacaoConta {
+  display: flex;
+  flex-direction: column;
+}
+
+.formCriacaoContaGroup {
+  margin-bottom: 15px;
+}
+
+.formCriacaoContaGroup label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.formCriacaoContaGroup input,
+.formCriacaoContaGroup select {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.botaoCriarConta {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.botaoCriarConta:hover {
+  background-color: #333;
+}
+
+.imagemCriacaoContaContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.eventImageCriacaoConta {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .criacaoContaContainer {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .formCriacaoContaContainer {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .imagemCriacaoContaContainer {
+    justify-content: center;
+  }
+}

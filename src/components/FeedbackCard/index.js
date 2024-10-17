@@ -5,7 +5,7 @@ function FeedbackCard({ feedback, name, age, imgSrc }) {
     <div className={styles.cardFeedbackContainer}>
       <p>{feedback}</p>
       <div className={styles.userDetailsCardFeedback}>
-      <img src={imgSrc} alt={name} className={styles.userImageCardFeedback} />
+      <img src={imgSrc} alt={name} title={name} className={styles.userImageCardFeedback} />
         <div>
           <span className={styles.userNameCardFeedback}>{name}</span>
           <br />

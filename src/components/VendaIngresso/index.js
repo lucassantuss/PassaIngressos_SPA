@@ -259,6 +259,7 @@ export default function VendaIngresso() {
           <img
             src={visualizacaoImagem}
             alt="Pôster do Evento"
+            title="Pôster do Evento"
             className={styles.eventImageVendaIngresso}
           />
         )}

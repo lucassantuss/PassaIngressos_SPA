@@ -72,3 +72,26 @@
 .botaoAdicionar:hover {
   background-color: #333;
 }
+
+@media (max-width: 1024px) {
+  .eventoContainer {
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .infoEventoContainer {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .imagemEvento {
+    max-width: 100%;
+    max-height: auto;
+  }
+
+  .detalhesEvento {
+    margin-right: 0;
+  }
+}

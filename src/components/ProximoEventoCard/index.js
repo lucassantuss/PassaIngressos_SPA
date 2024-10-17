@@ -6,6 +6,7 @@ function ProximoEventoCard({ imageUrl, title, year }) {
       <img
         src={imageUrl}
         alt={title}
+        title={title}
         className={styles.eventImageCardProximoEvento}
       />
       <p className={styles.eventTitleCardProximoEvento}>{title}</p>

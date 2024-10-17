@@ -1,13 +1,15 @@
-import CampoTitulo from "components/CampoTitulo"
-import InfoVendaIngresso from "components/InfoVendaIngresso"
+import InfoComoFunciona from "components/InfoComoFunciona";
+import InfoPassoAPasso from "components/InfoPassoAPasso";
 
-import styles from "./ComoFunciona.module.css"
+import styles from "./ComoFunciona.module.css";
 
 export default function ComoFunciona() {
-    return (
-        <div>
-            <CampoTitulo titulo="Como Funciona?" />
-            <InfoVendaIngresso />
-        </div>
-    )
+  return (
+    <div>      
+      <InfoComoFunciona />
+      
+      <InfoPassoAPasso tipo="Compra" />
+      <InfoPassoAPasso tipo="Venda" />
+    </div>
+  );
 }
