@@ -38,10 +38,10 @@ const EventosRelacionados = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.eventosRelacionadosContainer}>
       <CampoTitulo titulo="Eventos relacionados" />
 
-      <div className={styles.eventosRelacionadosContainer}>
+      <div className={styles.eventosRelacionadosContent}>
         {eventosRelacionados.map((evento, index) => (
           <Link key={evento.id} to={`/evento/${evento.id}`}>
             <EventoRelacionadoCard key={index} evento={evento} />

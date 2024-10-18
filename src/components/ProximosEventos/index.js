@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import CampoTitulo from "components/CampoTitulo";
 import ProximoEventoCard from "components/ProximoEventoCard";
 import api from "services/api";
 
 import styles from "./ProximosEventos.module.css";
-import { Link } from "react-router-dom";
 
 function ProximosEventos() {
   const [proximosEventos, setProximosEventos] = useState([]);

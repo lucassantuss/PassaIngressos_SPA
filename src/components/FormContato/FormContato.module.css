@@ -38,6 +38,7 @@
   font-size: 16px;
   margin-top: 10px;
   resize: none;
+  touch-action: none;
 }
 
 .formContatoGroup input::placeholder,
@@ -54,6 +55,7 @@
   cursor: pointer;
   font-size: 16px;
   text-align: center;
+  touch-action: none;
 }
 
 .botaoEnviarFormContato:hover {

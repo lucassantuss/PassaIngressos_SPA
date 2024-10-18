@@ -33,6 +33,7 @@
   font-size: 16px;
   color: black;
   transition: color 0.3s;
+  touch-action: none;
 }
 
 .menuLink:hover {
@@ -45,6 +46,7 @@
   padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
+  touch-action: none;
 }
 
 .menuLogin:hover {
@@ -52,6 +54,10 @@
 }
 
 @media (max-width: 768px) {
+  .menu {
+    padding: 20px 30px;
+  }
+  
   .menuItens {
     display: none;
     flex-direction: column;

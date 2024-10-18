@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import InfoPassoAPasso from "components/InfoPassoAPasso";
 import Botao from "components/Botao";
+import CampoTitulo from "components/CampoTitulo";
 
 import styles from "./Evento.module.css";
-import InfoPassoAPasso from "components/InfoPassoAPasso";
-import CampoTitulo from "components/CampoTitulo";
 
 const eventos = {
   1: {

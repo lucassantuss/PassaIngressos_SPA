@@ -5,8 +5,6 @@ import EventosDisponiveis from "components/EventosDisponiveis";
 import EventosRelacionados from "components/EventosRelacionados";
 import api from "services/api";
 
-import styles from "./Eventos.module.css";
-
 export default function Eventos() {
 
   const navigate = useNavigate();
