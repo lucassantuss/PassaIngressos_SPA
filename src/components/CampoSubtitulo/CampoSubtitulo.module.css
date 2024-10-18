@@ -7,5 +7,6 @@
 @media (max-width: 768px) {
   .subtitulo {
     font-size: 0.8rem;
+    touch-action: none;
   }
 }

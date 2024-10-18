@@ -1,5 +1,6 @@
 import FormContato from "components/FormContato";
 import CampoTitulo from "components/CampoTitulo";
+
 import styles from "./Sobre.module.css";
 
 export default function Sobre() {
@@ -9,13 +10,13 @@ export default function Sobre() {
         <div className={styles.textAboutContainer}>
           <CampoTitulo titulo="Sobre" />
           <p>
-            A Passa Ingressos é uma startup brasileira, com o intuito de
-            facilitar a revenda e compra de ingressos para eventos por meio de
-            uma plataforma que possa conectar as pessoas.
+            A <strong>Passa Ingressos</strong> é uma startup brasileira que visa
+            simplificar a compra e a revenda de ingressos para eventos,
+            conectando pessoas de maneira eficiente e acessível.
           </p>
           <p>
-            Na equipe de desenvolvimento do projeto e idealizadores da startup,
-            temos:
+            Nossa equipe de desenvolvimento e idealizadores da startup é
+            composta por:
           </p>
           <ul>
             <li>Danilo Rodrigues Dantas</li>

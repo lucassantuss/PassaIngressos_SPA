@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 import Botao from "components/Botao";
 
 import styles from "./AuthForm.module.css";
-import { Link } from "react-router-dom";
 
 const AuthForm = ({ tipo }) => {
   const [usuario, setUsuario] = useState("");
@@ -108,7 +108,7 @@ const AuthForm = ({ tipo }) => {
             </Link>
 
             <Link to="/esqueci-senha">
-              <button type="button" className={styles.linkRight} >
+              <button type="button" className={styles.linkRight}>
                 Esqueci minha senha
               </button>
             </Link>

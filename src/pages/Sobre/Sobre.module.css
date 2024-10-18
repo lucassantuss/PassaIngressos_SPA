@@ -11,8 +11,11 @@
   margin-bottom: 20px;
 }
 
-.textAboutContainer p {
-  font-size: 1rem;
+.textAboutContainer p,
+.textAboutContainer > ul > li {
+  font-size: 1.2rem;
+  color: #666;
+  line-height: 1.5;
 }
 
 .imageAboutContainer {
@@ -84,10 +87,6 @@
 @media (min-width: 1024px) {
   .aboutContainer {
     padding: 40px 20px;
-  }
-
-  .textAboutContainer p {
-    font-size: 1.2rem;
   }
 
   .imageAboutRow img {
