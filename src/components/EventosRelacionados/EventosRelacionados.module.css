@@ -1,22 +1,23 @@
 .eventosRelacionadosContainer {
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .eventosRelacionadosContent {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 20px;
-  margin-bottom: 60px;
   padding: 0 20px;
 }
 
-.eventosRelacionadosContent a {
+.eventLink {
   text-decoration: none;
+  color: inherit;
 }
 
 @media (max-width: 768px) {
   .eventosRelacionadosContent {
-    justify-content: center;
+    grid-template-columns: 1fr;
   }
 }
