@@ -9,3 +9,7 @@
   justify-content: center;
   gap: 20px;
 }
+
+.proximosEventosList a {
+  text-decoration: none;
+}

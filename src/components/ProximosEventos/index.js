@@ -43,7 +43,7 @@ function ProximosEventos() {
 
       <div className={styles.proximosEventosList}>
         {proximosEventos.map((evento, index) => (
-          <Link key={evento.id} to={`/evento/${evento.id}`}>
+          <Link key={evento.idEvento} to={`/evento/${evento.idEvento}`}>
             <ProximoEventoCard
               key={index}
               title={evento.nomeEvento}
