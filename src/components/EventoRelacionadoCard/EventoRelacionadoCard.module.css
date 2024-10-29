@@ -9,8 +9,12 @@
   margin: 10px 0;
 }
 
+.cardRelacionadoContainer a {
+  text-decoration: none;
+}
+
 .eventImageCardRelacionado {
-  width: 100%;
+  width: 375px;
   height: 300px;
   border-radius: 10px;
   object-fit: cover;

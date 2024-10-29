@@ -1,14 +1,21 @@
 .eventosDisponiveisContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.cardLink {
+  width: 90%;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .eventosDisponiveisContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
-  
-  @media (min-width: 768px) {
-    .eventosDisponiveisContainer {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-  }
+}

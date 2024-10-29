@@ -5,9 +5,9 @@ import styles from "./EventosDisponiveis.module.css";
 
 const EventosDisponiveis = ({ eventosFiltrados }) => {
   return (
-    <div>
+    <div className={styles.eventosDisponiveisContainer}>
       {eventosFiltrados.map((evento, index) => (
-        <Link key={evento.id} to={`/evento/${evento.id}`}>
+        <Link key={evento.idEvento} to={`/evento/${evento.idEvento}`} className={styles.cardLink}>
           <EventoDisponivelCard key={index} evento={evento} />
         </Link>
       ))}
