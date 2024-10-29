@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 import styles from "./EventoDisponivelCard.module.css";
 
-const EventoDisponivelCard = ({ evento }) => {
-  const { nomeEvento, quantidadeIngressosDisponiveis, ano, imagemEvento, reverse } = evento;
+const EventoDisponivelCard = ({ evento, reverse }) => {
+  const { idEvento, nomeEvento, quantidadeIngressosDisponiveis, ano, imagemEvento } = evento;
   
   return (
     <div
@@ -9,17 +11,21 @@ const EventoDisponivelCard = ({ evento }) => {
         reverse ? styles.reverse : ""
       }`}
     >
-      <img
-        src={imagemEvento}
-        alt={nomeEvento}
-        title={nomeEvento}
-        className={styles.eventImageCardDisponivel}
-      />
+      <Link to={`/evento/${idEvento}`}>
+        <img
+          src={imagemEvento}
+          alt={nomeEvento}
+          title={nomeEvento}
+          className={styles.eventImageCardDisponivel}
+        />
+      </Link>
       <div className={styles.eventInfoCardDisponivel}>
         <h2>{nomeEvento}</h2>
         <p>{quantidadeIngressosDisponiveis} Ingressos disponíveis</p>
         <p>{ano}</p>
-        <button className={styles.viewButtonCardDisponivel}>Visualizar</button>
+        <Link to={`/evento/${idEvento}`}>
+          <button className={styles.viewButtonCardDisponivel}>Visualizar</button>
+        </Link>
       </div>
     </div>
   );

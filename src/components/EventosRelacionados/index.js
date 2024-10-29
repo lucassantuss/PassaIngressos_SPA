@@ -43,7 +43,7 @@ const EventosRelacionados = () => {
 
       <div className={styles.eventosRelacionadosContent}>
         {eventosRelacionados.map((evento, index) => (
-          <Link key={evento.id} to={`/evento/${evento.id}`}>
+          <Link key={evento.idEvento} to={`/evento/${evento.idEvento}`} className={styles.eventLink}>
             <EventoRelacionadoCard key={index} evento={evento} />
           </Link>
         ))}
