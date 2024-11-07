@@ -8,7 +8,6 @@ export default function CriacaoConta() {
   const [usuario, setUsuario] = useState({
     login: "",
     senha: "",
-    foto: null,
     nome: "",
     sexo: "",
     cpf: "",
@@ -17,15 +16,11 @@ export default function CriacaoConta() {
   });
 
   const [sexos, setSexos] = useState([]);
-  const [visualizacaoImagem, setVisualizacaoImagem] = useState(null);
 
   useEffect(() => {
-    // Função para listar os sexos
     const listarSexos = async () => {
       try {
-        const response = await api.get(
-          "TabelaGeral/PesquisarItensPorTabela/TG_SEXO"
-        );
+        const response = await api.get("TabelaGeral/PesquisarItensPorTabela/TG_SEXO");
         setSexos(response.data);
       } catch (error) {
         console.error("Erro ao listar os sexos:", error);
@@ -36,28 +31,15 @@ export default function CriacaoConta() {
   }, []);
 
   const onChangeUsuario = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "foto") {
-      const file = files[0];
-      setUsuario({ ...usuario, foto: file });
-      setVisualizacaoImagem(URL.createObjectURL(file));
-    } else {
-      setUsuario({ ...usuario, [name]: value });
-    }
-  };
-
-  const converterParaBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
+    const { name, value } = e.target;
+    setUsuario({
+      ...usuario,
+      [name]: name === "sexo" ? parseInt(value, 10) : value,
     });
   };
 
   const validarFormulario = () => {
-    const { login, senha, foto, nome, sexo, cpf, rg, dataNascimento } = usuario;
+    const { login, senha, nome, sexo, cpf, rg, dataNascimento } = usuario;
 
     if (!login.trim()) {
       alert("O login é obrigatório.");
@@ -65,10 +47,6 @@ export default function CriacaoConta() {
     }
     if (!senha.trim()) {
       alert("A senha é obrigatória.");
-      return false;
-    }
-    if (!foto) {
-      alert("É necessário selecionar uma foto.");
       return false;
     }
     if (!nome.trim()) {
@@ -95,6 +73,12 @@ export default function CriacaoConta() {
     return true;
   };
 
+  const converterDataParaISO = (data) => {
+    const [dia, mes, ano] = data.split("/");
+    const dataISO = new Date(`${ano}-${mes}-${dia}T00:00:00.000Z`);
+    return dataISO.toISOString();
+  };
+
   const onSubmitUsuario = async (e) => {
     e.preventDefault();
 
@@ -103,30 +87,6 @@ export default function CriacaoConta() {
     }
 
     try {
-      // Converte a imagem para base64
-      let fotoBase64 = "";
-      let contentType = "";
-
-      if (usuario.foto) {
-        fotoBase64 = await converterParaBase64(usuario.foto);
-        contentType = usuario.foto.type;
-      }
-
-      // Primeiro, salva a foto e obtem o IdArquivo
-      const arquivoDto = {
-        ConteudoArquivo: fotoBase64.split(",")[1],
-        ContentType: contentType,
-        Extensao: usuario.foto.name.split(".").pop(),
-        Nome: usuario.foto.name,
-      };
-
-      const arquivoResponse = await api.post(
-        "/Arquivo/SalvarArquivo",
-        arquivoDto
-      );
-      const idArquivoFoto = arquivoResponse.data; // Obtem o Id do arquivo salvo
-
-      // Monta o objeto conforme o DTO esperado
       const usuarioDto = {
         Login: usuario.login,
         Senha: usuario.senha,
@@ -134,11 +94,10 @@ export default function CriacaoConta() {
         IdTgSexo: usuario.sexo,
         CPF: usuario.cpf,
         RG: usuario.rg,
-        DataNascimento: usuario.dataNascimento,
-        IdArquivoFoto: idArquivoFoto,
+        DataNascimento: converterDataParaISO(usuario.dataNascimento), // Converte data para ISO
+        IdArquivoFoto: 15, // ID fixo para a imagem padrão
       };
 
-      // Cria o usuário
       await api.post("/Usuario/CriarUsuario", usuarioDto, {
         headers: {
           "Content-Type": "application/json",
@@ -147,18 +106,15 @@ export default function CriacaoConta() {
 
       alert("Usuário criado com sucesso!");
 
-      // Limpa todos os campos
       setUsuario({
         login: "",
         senha: "",
-        foto: null,
         nome: "",
         sexo: "",
         cpf: "",
         rg: "",
         dataNascimento: "",
       });
-      setVisualizacaoImagem(null);
     } catch (error) {
       console.error("Erro ao criar usuário:", error);
     }
@@ -186,15 +142,6 @@ export default function CriacaoConta() {
               name="senha"
               placeholder="Digite sua senha"
               value={usuario.senha}
-              onChange={onChangeUsuario}
-            />
-          </div>
-          <div className={styles.formCriacaoContaGroup}>
-            <label>Foto de Perfil:</label>
-            <input
-              type="file"
-              name="foto"
-              accept="image/*"
               onChange={onChangeUsuario}
             />
           </div>
@@ -256,17 +203,6 @@ export default function CriacaoConta() {
             Criar Conta
           </button>
         </form>
-      </div>
-
-      <div className={styles.imagemCriacaoContaContainer}>
-        {visualizacaoImagem && (
-          <img
-            src={visualizacaoImagem}
-            alt="Foto de Perfil"
-            title="Foto de Perfil"
-            className={styles.eventImageCriacaoConta}
-          />
-        )}
       </div>
     </div>
   );
