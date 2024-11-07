@@ -14,23 +14,29 @@ const AuthProvider = ({ children }) => {
     return null;
   });
 
-  // Função de login para autenticar o usuário e salvar o token
-  const signIn = useCallback(async ({ username, password }) => {
-    try {
-      const response = await api.post("/Acesso/Login", {
-        Login: username,
-        Senha: password,
-      });
-      
-      const { Token } = response.data;
-      setToken(Token);
-      localStorage.setItem("@PermissionPI:token", Token);
-      api.defaults.headers.authorization = `Bearer ${Token}`;
-    } catch (error) {
-      console.error("Erro no login:", error);
-      throw new Error("Erro no login");
+// Função de login para autenticar o usuário e salvar o token
+const signIn = useCallback(async ({ username, password }) => {
+  try {
+    const response = await api.post("/Acesso/Login", {
+      Login: username,
+      Senha: password,
+    });
+    
+    const { token } = response.data;
+
+    if (token) {
+      setToken(token);
+      localStorage.setItem("@PermissionPI:token", token);
+      api.defaults.headers.authorization = `Bearer ${token}`;
+    } else {
+      console.error("Token não encontrado na resposta da API.");
+      throw new Error("Erro no login: token ausente");
     }
-  }, []);
+  } catch (error) {
+    console.error("Erro no login:", error);
+    throw new Error("Erro no login");
+  }
+}, []);
   
   // Função de logout
   const signOut = useCallback(() => {
