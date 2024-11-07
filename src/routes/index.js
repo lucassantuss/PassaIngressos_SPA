@@ -37,10 +37,10 @@ function AppRoutes() {
             <Route path="login" element={<Login />} />
             <Route path="esqueci-senha" element={<EsqueciMinhaSenha />} />
             <Route path="criar-conta" element={<CriarConta />} />
-            <Route path="minha-conta" element={<MinhaConta />} />
           </Route>
 
           <Route element={<PrivateRoutes role="ADMIN, USER" />}>
+            <Route path="minha-conta" element={<MinhaConta />} />
             <Route path="logout" element={<Login />} />
           </Route>
 

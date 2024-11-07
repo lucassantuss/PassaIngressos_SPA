@@ -1,10 +1,13 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "context/AuthContext";
 import styles from "./Menu.module.css";
 
 export default function Menu() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false); // Estado para controlar o logout
+  const { userLogged, signOut } = useAuth(); 
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -13,6 +16,19 @@ export default function Menu() {
   const handleLinkClick = () => {
     setMenuOpen(false);
   };
+
+  const handleLogout = () => {
+    signOut();
+    setMenuOpen(false);
+    setIsLoggingOut(true); // Marca que o usuário está em processo de logout
+  };
+
+  useEffect(() => {
+    if (isLoggingOut) {
+      navigate("/"); // Redireciona para a tela inicial
+      setIsLoggingOut(false); // Reseta o estado após o redirecionamento
+    }
+  }, [isLoggingOut, navigate]);
 
   return (
     <header>
@@ -36,17 +52,20 @@ export default function Menu() {
           <li>
             <Link to="/sobre" className={styles.menuLink} onClick={handleLinkClick}>Sobre</Link>
           </li>
-          {/* 
-          <li>
-            <Link to="/minha-conta" className={styles.menuLink} onClick={handleLinkClick}>Minha Conta</Link>
-          </li>
-          <li>
-            <Link to="/logout" className={styles.menuLogin} onClick={handleLinkClick}>Logout</Link>
-          </li> 
-          */}
-          <li>
-            <Link to="/login" className={styles.menuLogin} onClick={handleLinkClick}>Login</Link>
-          </li>
+          {userLogged() ? (
+            <>
+              <li>
+                <Link to="/minha-conta" className={styles.menuLink} onClick={handleLinkClick}>Minha Conta</Link>
+              </li>
+              <li>
+                <button className={styles.menuLogin} onClick={handleLogout}>Logout</button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link to="/login" className={styles.menuLogin} onClick={handleLinkClick}>Login</Link>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

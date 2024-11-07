@@ -2,40 +2,30 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Botao from "components/Botao";
-
 import styles from "./AuthForm.module.css";
 
 const AuthForm = ({ tipo }) => {
+  const { signIn } = useAuth();
+
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (tipo === "login") {
-      alert("Login bem-sucedido!");
-    } else if (tipo === "esqueci-senha") {
-      alert("Senha alterada com sucesso!");
-    }
-  };
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
+      try {
+        await signIn({ username: usuario, password: senha });
+        window.location.href = "/eventos"; // Redireciona após o login bem-sucedido
+      } catch (error) {
+        alert("Login e/ou senha inválidos!");
+      }
+    },
+    [usuario, senha, signIn]
+  );
 
   useEffect(() => {
     localStorage.removeItem("@PermissionPI:token");
   }, []);
-
-  const { signIn } = useAuth();
-
-  const handleSubmitAntigo = useCallback(
-    async (event) => {
-      event.preventDefault();
-
-      await signIn({ username, password });
-      window.location.href = "/como-funciona";
-    },
-    [username, password, signIn]
-  );
 
   return (
     <div className={styles["auth-container"]}>
