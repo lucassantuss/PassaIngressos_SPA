@@ -5,6 +5,7 @@ import { useAuth } from "context/AuthContext";
 import api from "services/api";
 
 import styles from "./VendaIngresso.module.css";
+import { Link } from "react-router-dom";
 
 export default function VendaIngresso() {
   const { userLogged, user } = useAuth();
@@ -88,6 +89,8 @@ export default function VendaIngresso() {
     if (!validarFormulario()) return;
 
     let idArquivoEvento = null;
+    const idUsuarioLogado = localStorage.getItem("@PermissionPI:idUsuarioLogado");
+
     try {
       let imagemBase64 = "", contentType = "", extensaoImagem = "";
       if (ingresso.imagem) {
@@ -113,7 +116,7 @@ export default function VendaIngresso() {
         LocalEvento: ingresso.local,
         DataHoraEvento: dataHoraEvento,
         IdTipoIngresso: parseInt(ingresso.tipoIngresso),
-        IdPessoaAnunciante: user.idPessoa,
+        IdPessoaAnunciante: parseInt(idUsuarioLogado),
         Valor: parseFloat(ingresso.valor),
         IdArquivoEvento: idArquivoEvento
       };
@@ -183,9 +186,9 @@ export default function VendaIngresso() {
           </div>
         </>
       ) : (
-        <p className={styles.mensagemLoginNecessario}>
-          Você precisa estar logado para anunciar um ingresso.
-        </p>
+        <Link to="/login" className={styles.mensagemLoginNecessario}>
+            Você precisa estar logado para anunciar um ingresso.
+        </Link>
       )}
     </div>
   );

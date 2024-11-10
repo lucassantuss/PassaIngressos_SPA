@@ -6,7 +6,7 @@ import styles from "./Menu.module.css";
 export default function Menu() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false); // Estado para controlar o logout
-  const { userLogged, signOut } = useAuth(); 
+  const { userLogged, signOut } = useAuth();
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -58,7 +58,7 @@ export default function Menu() {
                 <Link to="/minha-conta" className={styles.menuLink} onClick={handleLinkClick}>Minha Conta</Link>
               </li>
               <li>
-                <button className={styles.menuLogin} onClick={handleLogout}>Logout</button>
+                <Link className={styles.menuLogin} onClick={handleLogout}>Logout</Link>
               </li>
             </>
           ) : (

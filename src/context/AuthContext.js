@@ -22,11 +22,12 @@ const signIn = useCallback(async ({ username, password }) => {
       Senha: password,
     });
     
-    const { token } = response.data;
+    const { token, idUsuarioLogado } = response.data;
 
     if (token) {
       setToken(token);
       localStorage.setItem("@PermissionPI:token", token);
+      localStorage.setItem("@PermissionPI:idUsuarioLogado", idUsuarioLogado);
       api.defaults.headers.authorization = `Bearer ${token}`;
     } else {
       console.error("Token não encontrado na resposta da API.");
@@ -42,6 +43,7 @@ const signIn = useCallback(async ({ username, password }) => {
   const signOut = useCallback(() => {
     setToken(null);
     localStorage.removeItem("@PermissionPI:token");
+    localStorage.removeItem("@PermissionPI:idUsuarioLogado");
     delete api.defaults.headers.authorization;
   }, []);
 

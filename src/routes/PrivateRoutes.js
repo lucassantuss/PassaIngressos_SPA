@@ -5,22 +5,24 @@ import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 
 const PrivateRoutes = ({ role }) => {
-  const [permissions, setPermissions] = useState(false);
+  const [permissions, setPermissions] = useState(null);
   const navigate = useNavigate();
   const { userLogged } = useAuth();
 
   useEffect(() => {
-    async function loadRoles() {
+    const loadRoles = async () => {
       try {
         const response = await api.get("/Acesso/ListarPerfis");
         const userRoles = response.data;
-        
-        const hasRole = role.split(",").some(r => userRoles.includes(r));
+
+        const roleArray = role.split(",");
+        const hasRole = userRoles.some(profile => roleArray.includes(profile.nomePerfil.toUpperCase()));
         setPermissions(hasRole);
       } catch (error) {
         console.error("Erro ao carregar roles:", error);
+        setPermissions(false);
       }
-    }
+    };
 
     if (userLogged()) {
       loadRoles();
@@ -29,11 +31,17 @@ const PrivateRoutes = ({ role }) => {
     }
   }, [role, userLogged, navigate]);
 
-  if (!userLogged()) {
+  useEffect(() => {
+    if (permissions === false) {
+      navigate("/");
+    }
+  }, [permissions, navigate]);
+
+  if (!userLogged() || permissions === null) {
     return null;
   }
 
-  return permissions ? <Outlet /> : navigate("/");
+  return permissions ? <Outlet /> : null;
 };
 
 export default PrivateRoutes;

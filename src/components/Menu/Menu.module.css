@@ -45,6 +45,7 @@
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
+  cursor: pointer;
   text-decoration: none;
   touch-action: none;
 }
