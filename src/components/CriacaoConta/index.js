@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 import api from "services/api";
 
@@ -16,6 +17,7 @@ export default function CriacaoConta() {
   });
 
   const [sexos, setSexos] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const listarSexos = async () => {
@@ -98,7 +100,7 @@ export default function CriacaoConta() {
         IdArquivoFoto: 15, // ID fixo para a imagem padrão
       };
 
-      await api.post("/Usuario/CriarUsuario", usuarioDto, {
+      await api.post("/Acesso/CriarUsuario", usuarioDto, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -106,6 +108,8 @@ export default function CriacaoConta() {
 
       alert("Usuário criado com sucesso!");
 
+      navigate("/login");
+      
       setUsuario({
         login: "",
         senha: "",
@@ -116,6 +120,7 @@ export default function CriacaoConta() {
         dataNascimento: "",
       });
     } catch (error) {
+      alert("Não foi possível criar o usuário. Verifique se todos os campos foram digitados corretamente!");
       console.error("Erro ao criar usuário:", error);
     }
   };

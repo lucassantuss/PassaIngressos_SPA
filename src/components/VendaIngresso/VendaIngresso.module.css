@@ -75,12 +75,12 @@
 }
 
 .mensagemLoginNecessario {
+  text-decoration: none;
   flex: 1;
   text-align: center;
   color: red;
   font-size: 20px;
   font-weight: bold;
-  margin-top: 20px;
   padding: 20px;
   border: 2px solid red;
   border-radius: 8px;

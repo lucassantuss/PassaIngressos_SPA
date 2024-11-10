@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import InputMask from "react-input-mask";
 import api from "services/api";
-
 import styles from "./MinhaConta.module.css";
 
 export default function MinhaConta() {
   const [usuario, setUsuario] = useState({
-    login: "lucas.santos",
+    login: "",
     foto: null,
-    nome: "Lucas Araujo dos Santos",
-    sexo: "Masculino",
-    cpf: "123.456.789-01",
-    rg: "12.345.678-9",
-    dataNascimento: "09/10/2002",
+    nome: "",
+    sexo: "",
+    cpf: "",
+    rg: "",
+    dataNascimento: "",
   });
   const [sexos, setSexos] = useState([]);
   const [visualizacaoImagem, setVisualizacaoImagem] = useState(null);
+  const [fotoAlterada, setFotoAlterada] = useState(false);
 
   useEffect(() => {
     const listarSexos = async () => {
@@ -28,15 +28,30 @@ export default function MinhaConta() {
     };
 
     const carregarUsuario = async () => {
-      try {
-        const response = await api.get("/Usuario/ObterUsuarioLogado");
-        const usuarioData = response.data;
+      const idUsuarioLogado = localStorage.getItem("@PermissionPI:idUsuarioLogado");
+      if (!idUsuarioLogado) {
+        console.error("ID do usuário logado não encontrado.");
+        return;
+      }
 
-        // Converte a foto em URL para visualização
-        if (usuarioData.idArquivoFoto) {
-          usuarioData.foto = `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${usuarioData.idArquivoFoto}`;
-        }
-        setUsuario(usuarioData);
+      try {
+        const { data } = await api.get(`Acesso/PesquisarUsuarioPorId/${idUsuarioLogado}`);
+        
+        const usuarioData = {
+          login: data.login,
+          nome: data.nomePessoa,
+          sexo: data.idTgSexo,
+          cpf: data.cpf,
+          rg: data.rg,
+          dataNascimento: data.dataNascimento || "",
+          foto: data.idArquivoFoto
+            ? `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${data.idArquivoFoto}`
+            : null,
+        };
+        setUsuario({
+          ...usuarioData,
+          dataNascimento: formatarDataParaInput(usuarioData.dataNascimento)
+        });
         setVisualizacaoImagem(usuarioData.foto);
       } catch (error) {
         console.error("Erro ao carregar dados do usuário:", error);
@@ -47,44 +62,54 @@ export default function MinhaConta() {
     carregarUsuario();
   }, []);
 
+  const formatarDataParaInput = (data) => {
+    if (!data) return "";  
+    const [ano, mes, dia] = data.split("T")[0].split("-");  
+    return `${dia}/${mes}/${ano}`;
+  };
+
   const onChangeUsuario = (e) => {
     const { name, value, files } = e.target;
     if (name === "foto") {
       const file = files[0];
       setUsuario({ ...usuario, foto: file });
       setVisualizacaoImagem(URL.createObjectURL(file));
+      setFotoAlterada(true);
     } else {
       setUsuario({ ...usuario, [name]: value });
     }
   };
 
+  const converterDataParaISO = (data) => {
+    const [dia, mes, ano] = data.split("/");
+    return new Date(`${ano}-${mes}-${dia}T00:00:00.000Z`).toISOString();
+  };
+
+  const excluirArquivo = async (idArquivo) => {
+    try {
+      await api.delete(`/Arquivo/ExcluirArquivo/${idArquivo}`);
+    } catch (error) {
+      console.error("Erro ao excluir arquivo:", error);
+    }
+  };
+
   const onSubmitUsuario = async (e) => {
     e.preventDefault();
+    const idUsuarioLogado = localStorage.getItem("@PermissionPI:idUsuarioLogado");
+    if (!idUsuarioLogado) {
+      console.error("ID do usuário logado não encontrado.");
+      return;
+    }
+
+    let idArquivoFoto = usuario.foto && fotoAlterada && typeof usuario.foto !== "string" 
+      ? null 
+      : usuario.foto?.split("/").pop();
+
     try {
-      let fotoBase64 = "";
-      let contentType = "";
-      if (usuario.foto) {
-        fotoBase64 = await converterParaBase64(usuario.foto);
-        contentType = usuario.foto.type;
-      }
+      if (fotoAlterada && usuario.foto && typeof usuario.foto !== "string") {
+        const fotoBase64 = await converterParaBase64(usuario.foto);
+        const contentType = usuario.foto.type;
 
-      const usuarioDto = {
-        Login: usuario.login,
-        NomePessoa: usuario.nome,
-        IdTgSexo: usuario.sexo,
-        CPF: usuario.cpf,
-        RG: usuario.rg,
-        DataNascimento: usuario.dataNascimento,
-      };
-
-      // Atualiza o usuário
-      await api.put("/Usuario/AtualizarUsuario", usuarioDto, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (usuario.foto) {
         const arquivoDto = {
           ConteudoArquivo: fotoBase64.split(",")[1],
           ContentType: contentType,
@@ -92,12 +117,27 @@ export default function MinhaConta() {
           Nome: usuario.foto.name,
         };
 
-        await api.post("/Arquivo/SalvarArquivo", arquivoDto);
+        const arquivoResponse = await api.post("Arquivo/SalvarArquivo", arquivoDto);
+        idArquivoFoto = arquivoResponse.data;
       }
+
+      const usuarioAtualizadoDto = {
+        Login: usuario.login,
+        NomePessoa: usuario.nome,
+        IdTgSexo: parseInt(usuario.sexo),
+        CPF: usuario.cpf,
+        RG: usuario.rg,
+        DataNascimento: converterDataParaISO(usuario.dataNascimento),
+        IdArquivoFoto: idArquivoFoto ? parseInt(idArquivoFoto) : null,
+      };
+
+      await api.put(`Acesso/AlterarUsuario/${idUsuarioLogado}`, usuarioAtualizadoDto);
 
       alert("Dados atualizados com sucesso!");
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
+      if (idArquivoFoto && fotoAlterada) await excluirArquivo(idArquivoFoto);
+      alert("Erro ao atualizar dados da conta.");
     }
   };
 
@@ -117,22 +157,11 @@ export default function MinhaConta() {
         <form className={styles.formMinhaConta} onSubmit={onSubmitUsuario}>
           <div className={styles.formMinhaContaGroup}>
             <label>Login:</label>
-            <input
-              type="text"
-              name="login"
-              value={usuario.login}
-              onChange={onChangeUsuario}
-              disabled
-            />
+            <input type="text" name="login" value={usuario.login} disabled />
           </div>
           <div className={styles.formMinhaContaGroup}>
             <label>Foto de Perfil:</label>
-            <input
-              type="file"
-              name="foto"
-              accept="image/*"
-              onChange={onChangeUsuario}
-            />
+            <input type="file" name="foto" accept="image/*" onChange={onChangeUsuario} />
           </div>
           <div className={styles.formMinhaContaGroup}>
             <label>Nome:</label>

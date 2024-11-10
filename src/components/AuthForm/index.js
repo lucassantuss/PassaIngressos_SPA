@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../../services/api";
 import Botao from "components/Botao";
+
 import styles from "./AuthForm.module.css";
 
 const AuthForm = ({ tipo }) => {
   const { signIn } = useAuth();
+  const navigate = useNavigate();
 
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
@@ -14,13 +17,27 @@ const AuthForm = ({ tipo }) => {
     async (event) => {
       event.preventDefault();
       try {
-        await signIn({ username: usuario, password: senha });
-        window.location.href = "/eventos"; // Redireciona após o login bem-sucedido
+        if (tipo === "login") {
+          await signIn({ username: usuario, password: senha });
+          window.location.href = "/eventos"; // Redireciona após o login bem-sucedido
+        } else if (tipo === "esqueci-senha") {
+          // Chama a API para redefinir a senha
+          await api.put("Acesso/RedefinirSenha", {
+            login: usuario,
+            senha: senha,
+          });
+          alert("Senha alterada com sucesso!");
+          navigate("/login"); // Redireciona para a página de login
+        }
       } catch (error) {
-        alert("Login e/ou senha inválidos!");
+        if (tipo === "login") {
+          alert("Login e/ou senha inválidos!");
+        } else {
+          alert("Erro ao redefinir a senha. Verifique os dados informados.");
+        }
       }
     },
-    [usuario, senha, signIn]
+    [usuario, senha, signIn, tipo, navigate]
   );
 
   useEffect(() => {
