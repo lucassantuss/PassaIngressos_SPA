@@ -80,6 +80,37 @@ export default function MinhaConta() {
     }
   };
 
+  const validarFormulario = () => {
+    const { login, nome, sexo, cpf, rg, dataNascimento } = usuario;
+
+    if (!login.trim()) {
+      alert("O login é obrigatório.");
+      return false;
+    }
+    if (!nome.trim()) {
+      alert("O nome é obrigatório.");
+      return false;
+    }
+    if (!sexo) {
+      alert("É necessário selecionar um sexo.");
+      return false;
+    }
+    if (!cpf.trim()) {
+      alert("O CPF é obrigatório.");
+      return false;
+    }
+    if (!rg.trim()) {
+      alert("O RG é obrigatório.");
+      return false;
+    }
+    if (!dataNascimento) {
+      alert("A data de nascimento é obrigatória.");
+      return false;
+    }
+
+    return true;
+  };
+
   const converterDataParaISO = (data) => {
     const [dia, mes, ano] = data.split("/");
     return new Date(`${ano}-${mes}-${dia}T00:00:00.000Z`).toISOString();
@@ -95,6 +126,11 @@ export default function MinhaConta() {
 
   const onSubmitUsuario = async (e) => {
     e.preventDefault();
+
+    if (!validarFormulario()) {
+      return;
+    }
+    
     const idUsuarioLogado = localStorage.getItem("@PermissionPI:idUsuarioLogado");
     if (!idUsuarioLogado) {
       console.error("ID do usuário logado não encontrado.");

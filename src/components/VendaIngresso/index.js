@@ -133,6 +133,7 @@ export default function VendaIngresso() {
       if (idArquivoEvento) {
         await excluirArquivo(idArquivoEvento); // Exclui o arquivo se o ingresso falhar ao ser anunciado
       }
+      alert("Erro ao anunciar o ingresso");
     }
   };
 
@@ -187,7 +188,7 @@ export default function VendaIngresso() {
         </>
       ) : (
         <Link to="/login" className={styles.mensagemLoginNecessario}>
-            Você precisa estar logado para anunciar um ingresso.
+          Você precisa estar logado para anunciar um ingresso.
         </Link>
       )}
     </div>
