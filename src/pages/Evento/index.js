@@ -3,37 +3,62 @@ import { useParams } from "react-router-dom";
 import InfoPassoAPasso from "components/InfoPassoAPasso";
 import Botao from "components/Botao";
 import CampoTitulo from "components/CampoTitulo";
+import api from "services/api"; // Certifique-se de que o arquivo de configuração da API está correto
 
 import styles from "./Evento.module.css";
 
-const eventos = {
-  1: {
-    title: "The Weeknd",
-    locais: [
-      "Estádio Morumbis (São Paulo - Brasil)",
-      "Allianz Parque (São Paulo - Brasil)",
-    ],
-    datas: ["07/09/2024 - 21h", "08/09/2024 - 21h"],
-    tiposIngresso: ["Arquibancada (Meia-Entrada)", "Pista (Inteira)"],
-    valores: ["R$ 240,00", "R$ 480,00"],
-    imageUrl: "/images/events/The-Weeknd-2024.jpg",
-  },
-};
-
 export default function Evento() {
   const { id } = useParams(); // Pega o ID da URL
+  const [ingressos, setIngressos] = useState([]);
   const [eventoAtual, setEventoAtual] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Simulação de fetch de dados do evento
   useEffect(() => {
-    const evento = eventos[id];
-    if (evento) {
-      setEventoAtual(evento);
-    }
+    const carregarIngressos = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get(`Eventos/BuscarIngressosPorEvento/${id}`);
+        const ingressosData = response.data;
+
+        if (ingressosData.length > 0) {
+          setIngressos(ingressosData);
+
+        // Obter a imagem através do idArquivoFoto
+
+
+          const foto = ingressosData.IdArquivoEvento
+          ? `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${ingressosData.IdArquivoEvento}`
+          : null     ; 
+
+          // Criar um objeto para o evento atual baseado nos ingressos
+          setEventoAtual({
+            title: ingressosData[0].nomeEvento,
+            imageUrl: foto,
+            locais: [...new Set(ingressosData.map((ingresso) => ingresso.localEvento))],
+            datas: [...new Set(ingressosData.map((ingresso) => ingresso.dataHoraEvento))],
+            tiposIngresso: [...new Set(ingressosData.map((ingresso) => ingresso.idTipoIngresso))],
+            valores: [...new Set(ingressosData.map((ingresso) => ingresso.valor))],
+          });
+        } else {
+          setIngressos([]);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar ingressos:", error);
+        setIngressos([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    carregarIngressos();
   }, [id]);
 
+  if (loading) {
+    return <CampoTitulo titulo="Carregando ingressos..." />;
+  }
+
   if (!eventoAtual) {
-    return <CampoTitulo titulo="Evento não encontrado..." />;
+    return <CampoTitulo titulo="Nenhum ingresso encontrado para este evento." />;
   }
 
   return (
@@ -90,7 +115,7 @@ export default function Evento() {
               <select className={styles.campoSelect}>
                 {eventoAtual.valores.map((valor, index) => (
                   <option key={index} value={valor}>
-                    {valor}
+                    R$ {valor.toFixed(2)}
                   </option>
                 ))}
               </select>
