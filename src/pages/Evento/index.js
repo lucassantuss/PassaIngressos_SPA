@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import InfoPassoAPasso from "components/InfoPassoAPasso";
 import Botao from "components/Botao";
 import CampoTitulo from "components/CampoTitulo";
-import api from "services/api"; // Certifique-se de que o arquivo de configuração da API está correto
-
+import api from "services/api";
 import styles from "./Evento.module.css";
 
 export default function Evento() {
@@ -17,28 +16,29 @@ export default function Evento() {
     const carregarIngressos = async () => {
       try {
         setLoading(true);
+
+        // Faz a requisição para buscar os ingressos do evento
         const response = await api.get(`Eventos/BuscarIngressosPorEvento/${id}`);
         const ingressosData = response.data;
 
         if (ingressosData.length > 0) {
-          setIngressos(ingressosData);
+          // Verifica se há uma imagem associada ao evento
+          const idArquivoEvento = ingressosData[0].idArquivoEvento;
+          const imageUrl = idArquivoEvento
+            ? `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${idArquivoEvento}`
+            : "/images/Event.jpg"; // Imagem padrão
 
-        // Obter a imagem através do idArquivoFoto
-
-
-          const foto = ingressosData.IdArquivoEvento
-          ? `${api.defaults.baseURL}Arquivo/PesquisarArquivoPorId/${ingressosData.IdArquivoEvento}`
-          : null     ; 
-
-          // Criar um objeto para o evento atual baseado nos ingressos
+          // Define o evento atual com os dados relevantes
           setEventoAtual({
             title: ingressosData[0].nomeEvento,
-            imageUrl: foto,
+            imageUrl,
             locais: [...new Set(ingressosData.map((ingresso) => ingresso.localEvento))],
             datas: [...new Set(ingressosData.map((ingresso) => ingresso.dataHoraEvento))],
             tiposIngresso: [...new Set(ingressosData.map((ingresso) => ingresso.idTipoIngresso))],
             valores: [...new Set(ingressosData.map((ingresso) => ingresso.valor))],
           });
+
+          setIngressos(ingressosData);
         } else {
           setIngressos([]);
         }
