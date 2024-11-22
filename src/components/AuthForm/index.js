@@ -20,15 +20,16 @@ const AuthForm = ({ tipo }) => {
         if (tipo === "login") {
           await signIn({ username: usuario, password: senha });
           window.location.href = "/eventos"; // Redireciona após o login bem-sucedido
-        } else if (tipo === "esqueci-senha") {
-          // Chama a API para redefinir a senha
-          await api.put("Acesso/RedefinirSenha", {
-            login: usuario,
-            senha: senha,
-          });
-          alert("Senha alterada com sucesso!");
-          navigate("/login"); // Redireciona para a página de login
-        }
+        } 
+        // else if (tipo === "esqueci-senha") {
+        //   // Chama a API para redefinir a senha
+        //   await api.put("Acesso/RedefinirSenha", {
+        //     login: usuario,
+        //     senha: senha,
+        //   });
+        //   alert("Senha alterada com sucesso!");
+        //   navigate("/login"); // Redireciona para a página de login
+        // }
       } catch (error) {
         if (tipo === "login") {
           alert("Login e/ou senha inválidos!");
@@ -73,7 +74,7 @@ const AuthForm = ({ tipo }) => {
           </>
         )}
 
-        {tipo === "esqueci-senha" && (
+        {/* {tipo === "esqueci-senha" && (
           <>
             <div className={styles["form-group"]}>
               <label>Usuário</label>
@@ -97,7 +98,7 @@ const AuthForm = ({ tipo }) => {
               />
             </div>
           </>
-        )}
+        )} */}
 
         <div className={styles["form-group"]}>
           <Botao
@@ -114,11 +115,11 @@ const AuthForm = ({ tipo }) => {
               </button>
             </Link>
 
-            <Link to="/esqueci-senha">
+            {/* <Link to="/esqueci-senha">
               <button type="button" className={styles.linkRight}>
                 Esqueci minha senha
               </button>
-            </Link>
+            </Link> */}
           </div>
         )}
       </form>

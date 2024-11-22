@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "context/AuthContext";
+import PrivateRoutes from "./PrivateRoutes";
 
 import Menu from "../components/Menu";
 import PaginaPadrao from "../components/PaginaPadrao";
@@ -13,9 +15,6 @@ import Sobre from '../pages/Sobre';
 import Login from "../pages/Login"
 import EsqueciMinhaSenha from "../pages/EsqueciMinhaSenha";
 import NaoEncontrada from "../pages/NaoEncontrada"
-
-import PrivateRoutes from "./PrivateRoutes";
-import { AuthProvider } from "context/AuthContext";
 import CriarConta from "pages/CriarConta";
 import MinhaConta from "pages/MinhaConta";
 
@@ -35,7 +34,6 @@ function AppRoutes() {
             <Route path="sobre" element={<Sobre />} />
 
             <Route path="login" element={<Login />} />
-            <Route path="esqueci-senha" element={<EsqueciMinhaSenha />} />
             <Route path="criar-conta" element={<CriarConta />} />
           </Route>
 
