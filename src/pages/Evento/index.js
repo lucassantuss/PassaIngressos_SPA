@@ -12,6 +12,7 @@ export default function Evento() {
   const [ingressos, setIngressos] = useState([]);
   const [eventoAtual, setEventoAtual] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [tiposIngressos, setTiposIngressos] = useState({}); // Guarda os tipos de ingressos com ID e nome
 
   useEffect(() => {
     const carregarIngressos = async () => {
@@ -51,7 +52,21 @@ export default function Evento() {
       }
     };
 
+    const carregarTiposIngressos = async () => {
+      try {
+        const response = await api.get("TabelaGeral/PesquisarItensPorTabela/TG_TIPO_INGRESSO");
+        const tiposMap = response.data.reduce((acc, tipo) => {
+          acc[tipo.idItemTabelaGeral] = tipo.descricao;
+          return acc;
+        }, {});
+        setTiposIngressos(tiposMap);
+      } catch (error) {
+        console.error("Erro ao carregar os tipos de ingressos:", error);
+      }
+    };
+
     carregarIngressos();
+    carregarTiposIngressos();
   }, [id]);
 
   if (loading) {
@@ -105,7 +120,7 @@ export default function Evento() {
               <select className={styles.campoSelect}>
                 {eventoAtual.tiposIngresso.map((tipo, index) => (
                   <option key={index} value={tipo}>
-                    {tipo}
+                    {tiposIngressos[tipo] || "Tipo desconhecido"}
                   </option>
                 ))}
               </select>
