@@ -130,7 +130,7 @@ export default function VendaIngresso() {
         Valor: parseFloat(ingresso.valor)
       };
 
-      await api.post("/Eventos/SalvarIngresso", ingressoDto);
+      await api.post("/Eventos/AnunciarIngresso", ingressoDto);
 
       alert("Ingresso anunciado com sucesso!");
       setIngresso({ nome: "", imagem: null, local: "", data: "", horario: "", tipoIngresso: "", valor: "" });
