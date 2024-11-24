@@ -111,19 +111,26 @@ export default function VendaIngresso() {
 
       const dataHoraEvento = `${ingresso.data.split("/").reverse().join("-")}T${ingresso.horario}`;
 
-      const ingressoDto = {
+      // Primeiro, salva o evento
+      const eventoDto = {
         NomeEvento: ingresso.nome,
         LocalEvento: ingresso.local,
         DataHoraEvento: dataHoraEvento,
-        IdTipoIngresso: parseInt(ingresso.tipoIngresso),
-        IdPessoaAnunciante: parseInt(idUsuarioLogado),
-        Valor: parseFloat(ingresso.valor),
         IdArquivoEvento: idArquivoEvento
       };
 
-      await api.post("/Eventos/AnunciarIngresso", ingressoDto, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const eventoResponse = await api.post("/Eventos/SalvarEvento", eventoDto);
+      const idEvento = eventoResponse.data; // ID do evento retornado
+
+      // Depois, salva o ingresso
+      const ingressoDto = {
+        IdTipoIngresso: parseInt(ingresso.tipoIngresso),
+        IdPessoaAnunciante: parseInt(idUsuarioLogado),
+        IdEvento: idEvento,
+        Valor: parseFloat(ingresso.valor)
+      };
+
+      await api.post("/Eventos/SalvarIngresso", ingressoDto);
 
       alert("Ingresso anunciado com sucesso!");
       setIngresso({ nome: "", imagem: null, local: "", data: "", horario: "", tipoIngresso: "", valor: "" });
@@ -131,7 +138,7 @@ export default function VendaIngresso() {
     } catch (error) {
       console.error("Erro ao anunciar ingresso:", error);
       if (idArquivoEvento) {
-        await excluirArquivo(idArquivoEvento); // Exclui o arquivo se o ingresso falhar ao ser anunciado
+        await excluirArquivo(idArquivoEvento);
       }
       alert("Erro ao anunciar o ingresso");
     }
