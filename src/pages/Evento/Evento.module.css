@@ -15,8 +15,8 @@
 }
 
 .imagemEvento {
-  max-width: 400px;
-  max-height: 500px;
+  max-width: 500px;
+  max-height: 400px;
   object-fit: cover;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -31,6 +31,7 @@
 
 .tituloEvento {
   font-size: 2.5rem;
+  margin-top: 0px;
   margin-bottom: 25px;
 }
 
@@ -46,7 +47,12 @@
 
 .linhaEvento label {
   font-weight: bold;
+  font-size: 18px;
   margin-right: 10px;
+}
+
+.linhaEvento span {
+  font-size: 18px;
 }
 
 .linhaEvento .campoSelect {
@@ -59,6 +65,7 @@
 }
 
 .botaoAdicionar {
+  margin-top: 10px;
   width: 100%;
   padding: 10px;
   background-color: black;
@@ -77,6 +84,7 @@
   .eventoContainer {
     flex-direction: column;
     align-items: center;
+    text-align: center;
     margin: 20px;
     padding: 10px;
   }

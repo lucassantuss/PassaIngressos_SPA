@@ -12,15 +12,18 @@ export default function Evento() {
   const [ingressos, setIngressos] = useState([]);
   const [eventoAtual, setEventoAtual] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [tiposIngressos, setTiposIngressos] = useState({}); // Guarda os tipos de ingressos com ID e nome
+  const [tiposIngressos, setTiposIngressos] = useState({});
+  const [ingressoSelecionado, setIngressoSelecionado] = useState(null);
 
   useEffect(() => {
     const carregarIngressos = async () => {
       try {
         setLoading(true);
 
-        // Faz a requisição para buscar os ingressos do evento
-        const response = await api.get(`Eventos/BuscarIngressosPorEvento/${id}`);
+        // Busca os ingressos do evento
+        const response = await api.get(
+          `Eventos/BuscarIngressosPorEvento/${id}`
+        );
         const ingressosData = response.data;
 
         if (ingressosData.length > 0) {
@@ -34,10 +37,6 @@ export default function Evento() {
           setEventoAtual({
             title: ingressosData[0].nomeEvento,
             imageUrl,
-            locais: [...new Set(ingressosData.map((ingresso) => ingresso.localEvento))],
-            datas: [...new Set(ingressosData.map((ingresso) => ingresso.dataHoraEvento))],
-            tiposIngresso: [...new Set(ingressosData.map((ingresso) => ingresso.idTipoIngresso))],
-            valores: [...new Set(ingressosData.map((ingresso) => ingresso.valor))],
           });
 
           setIngressos(ingressosData);
@@ -54,7 +53,9 @@ export default function Evento() {
 
     const carregarTiposIngressos = async () => {
       try {
-        const response = await api.get("TabelaGeral/PesquisarItensPorTabela/TG_TIPO_INGRESSO");
+        const response = await api.get(
+          "TabelaGeral/PesquisarItensPorTabela/TG_TIPO_INGRESSO"
+        );
         const tiposMap = response.data.reduce((acc, tipo) => {
           acc[tipo.idItemTabelaGeral] = tipo.descricao;
           return acc;
@@ -69,13 +70,55 @@ export default function Evento() {
     carregarTiposIngressos();
   }, [id]);
 
+  const handleComprarIngresso = async () => {
+    const idUsuarioLogado = localStorage.getItem(
+      "@PermissionPI:idUsuarioLogado"
+    );
+
+    if (!idUsuarioLogado) {
+      alert("Você precisa estar logado para comprar um ingresso.");
+      return;
+    }
+
+    if (!ingressoSelecionado) {
+      alert("Selecione um ingresso para continuar.");
+      return;
+    }
+
+    try {
+      const response = await api.post(
+        `Eventos/ComprarIngresso/${ingressoSelecionado}`,
+        { IdPessoaComprador: parseInt(idUsuarioLogado) },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      alert(response.data);
+    } catch (error) {
+      console.error("Erro ao tentar comprar ingresso:", error);
+
+      if (error.response?.status === 400) {
+        alert(error.response.data || "Erro nos dados enviados.");
+      } else if (error.response?.status === 404) {
+        alert("Ingresso não encontrado.");
+      } else {
+        alert("Ocorreu um erro ao processar a compra. Tente novamente.");
+      }
+    }
+  };
+
   if (loading) {
     return <CampoTitulo titulo="Carregando ingressos..." />;
   }
 
   if (!eventoAtual) {
-    return <CampoTitulo titulo="Nenhum ingresso encontrado para este evento." />;
+    return (
+      <CampoTitulo titulo="Nenhum ingresso encontrado para este evento." />
+    );
   }
+
+  const ingressoAtual = ingressos.find(
+    (ingresso) => ingresso.idIngresso === Number(ingressoSelecionado)
+  );
 
   return (
     <>
@@ -94,52 +137,54 @@ export default function Evento() {
 
           <div className={styles.detalhesEvento}>
             <div className={styles.linhaEvento}>
-              <label>Local:</label>
-              <select className={styles.campoSelect}>
-                {eventoAtual.locais.map((local, index) => (
-                  <option key={index} value={local}>
-                    {local}
+              <label>Ingressos Disponíveis:</label>
+              <select
+                className={styles.campoSelect}
+                onChange={(e) =>
+                  setIngressoSelecionado(e.target.value)
+                }
+              >
+                <option value="">Selecione um ingresso</option>
+                {ingressos.map((ingresso) => (
+                  <option key={ingresso.idIngresso} value={ingresso.idIngresso}>
+                    {tiposIngressos[ingresso.idTipoIngresso]} - R${" "}
+                    {ingresso.valor.toFixed(2)}
                   </option>
                 ))}
               </select>
             </div>
 
-            <div className={styles.linhaEvento}>
-              <label>Data:</label>
-              <select className={styles.campoSelect}>
-                {eventoAtual.datas.map((data, index) => (
-                  <option key={index} value={data}>
-                    {data}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {ingressoAtual && (
+              <div className={styles.detalhesEvento}>
+                <div className={styles.linhaEvento}>
+                  <label>Local:</label>
+                  <span>{ingressoAtual.localEvento}</span>
+                </div>
 
-            <div className={styles.linhaEvento}>
-              <label>Tipo Ingresso:</label>
-              <select className={styles.campoSelect}>
-                {eventoAtual.tiposIngresso.map((tipo, index) => (
-                  <option key={index} value={tipo}>
-                    {tiposIngressos[tipo] || "Tipo desconhecido"}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <div className={styles.linhaEvento}>
+                  <label>Data:</label>
+                  <span>{ingressoAtual.dataHoraEvento}</span>
+                </div>
 
-            <div className={styles.linhaEvento}>
-              <label>Valor:</label>
-              <select className={styles.campoSelect}>
-                {eventoAtual.valores.map((valor, index) => (
-                  <option key={index} value={valor}>
-                    R$ {valor.toFixed(2)}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <div className={styles.linhaEvento}>
+                  <label>Tipo Ingresso:</label>
+                  <span>
+                    {tiposIngressos[ingressoAtual.idTipoIngresso] ||
+                      "Tipo desconhecido"}
+                  </span>
+                </div>
+
+                <div className={styles.linhaEvento}>
+                  <label>Valor:</label>
+                  <span>R$ {ingressoAtual.valor.toFixed(2)}</span>
+                </div>
+              </div>
+            )}
 
             <Botao
               cn={styles.botaoAdicionar}
-              conteudo="Adicionar ao Carrinho"
+              conteudo="Comprar Ingresso"
+              onClick={handleComprarIngresso}
             />
           </div>
         </div>
