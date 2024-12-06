@@ -1,10 +1,10 @@
-# PassaIngressos_SPA
-Projeto Interdisciplinar realizado na Faculdade Engenheiro Salvador Arena (FESA) no 8 Semestre de Engenharia de Computação.
+# Passa Ingressos - SPA
+Interdisciplinary project carried out at Faculdade Engenheiro Salvador Arena (FESA) in the 8th semester of Computer Engineering.
 
 ## SPA - FrontEnd
-Desenvolvido com React, essa aplicação SPA (Single Page Application) visa agregar uma melhor experiência para o usuário final da PassaIngressos.
+Developed with React, this SPA (Single Page Application) application aims to provide a better experience for the PassaIngressos end user.
 
-## Integrantes do Grupo
+## Group Members
 
 > 081210009 - Lucas Araujo dos Santos\
 > 081210027 - Danilo Rodrigues Dantas\
